@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI vs Body Fat Analyzer — BodyCompCheck</title>
+<meta name="description" content="Compare BMI and body fat percentage side by side. Detect BMI false positives for athletes and flag normal weight obesity. Free. Private.">
+<link rel="canonical" href="https://bodycompcheck.com/tools/bmi-analyzer.html">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<meta property="og:title" content="BMI vs Body Fat Analyzer — BodyCompCheck">
+<meta property="og:description" content="Compare BMI and body fat percentage side by side. Detect false positives.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bodycompcheck.com/tools/bmi-analyzer.html">
+<meta property="og:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BMI vs Body Fat Analyzer">
+<meta name="twitter:description" content="Compare BMI and body fat percentage side by side.">
+<meta name="twitter:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "BMI vs Body Fat Analyzer",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Compare BMI and body fat percentage side by side. Detect BMI false positives for athletes and flag normal weight obesity.",
+  "url": "https://bodycompcheck.com/tools/bmi-analyzer.html",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Clarke",
+    "url": "https://bodycompcheck.com/about.html"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="bcc-nav">
+  <div class="bcc-container bcc-nav-inner">
+    <a href="../index.html" class="bcc-logo">BodyComp<span>Check</span></a>
+    <button class="bcc-nav-toggle" onclick="document.querySelector('.bcc-nav-links').classList.toggle('active')">&#9776;</button>
+    <ul class="bcc-nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Tools</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="bcc-ad-slot" id="tool_top" data-ad-slot="tool_top"></div>
+
+<div class="bcc-tool-layout-d">
+  <h1>⚖️ BMI vs Body Fat Analyzer</h1>
+  <p class="tool-subtitle">See the mismatch between BMI and body fat. The old shortcut vs. the real picture. All data stays in your browser.</p>
+
+  <div class="bcc-tool-card-minimal">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+        <select id="bmi-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Age</label>
+        <input type="number" id="bmi-age" value="30" min="18" max="80" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Height (inches)</label>
+        <input type="number" id="bmi-height" value="70" min="48" max="96" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Weight (lbs)</label>
+        <input type="number" id="bmi-weight" value="180" min="80" max="500" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Body Fat % (if known)</label>
+        <input type="number" id="bmi-bf" value="20" min="2" max="60" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Activity Level</label>
+        <select id="bmi-activity" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="sedentary">Sedentary</option>
+          <option value="light">Light Activity</option>
+          <option value="moderate">Moderate Activity</option>
+          <option value="active">Active / Athletic</option>
+          <option value="very">Very Active / Competitive</option>
+        </select>
+      </div>
+    </div>
+    <button class="bcc-btn bcc-btn-primary" onclick="analyzeBMI()" style="width:100%;">Analyze</button>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="how-it-works">
+  <h3>How It Works</h3>
+  <p style="color:var(--bcc-text-light);font-size:0.95rem;margin-bottom:16px;line-height:1.7;">
+    This analyzer compares your <strong>BMI</strong> (Body Mass Index) against your <strong>body fat percentage</strong> side-by-side. BMI only uses height and weight — it cannot see muscle vs. fat. This creates two common misclassifications: <strong>BMI false positives</strong> (muscular people labeled "overweight") and <strong>normal weight obesity</strong> (BMI normal but body fat too high). The tool flags these mismatches automatically and shows you which metric to trust. The visualization bar compares your values against population categories.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.9rem;color:var(--bcc-text-light);">
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">BMI</strong><br>
+      Error: ±10-15%<br>
+      Cannot distinguish muscle from fat
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Body Fat %</strong><br>
+      Error: ±3-5% (BIA) to ±1-2% (DEXA)<br>
+      Directly measures adipose tissue
+    </div>
+  </div>
+  <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:16px;">
+    <strong>Tip:</strong> If you are athletic or muscular, always prioritize body fat percentage over BMI. If you are sedentary, BMI is a rough screening tool but still misses normal weight obesity.
+  </p>
+</div>
+
+<div class="bcc-tool-card-minimal" id="bmi-results" style="display:none;">
+    <h3>Analysis Results</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;">
+      <div style="text-align:center;padding:24px;background:var(--bcc-light);border-radius:var(--bcc-radius);border:2px solid var(--bcc-border);">
+        <div style="font-size:0.85rem;color:var(--bcc-text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">BMI</div>
+        <div style="font-size:2.5rem;font-weight:700;color:var(--bcc-dark);font-family:var(--bcc-font-heading);" id="res-bmi">--</div>
+        <div style="font-size:1rem;color:var(--bcc-text-light);margin-top:4px;" id="res-bmi-cat">--</div>
+        <div style="font-size:0.8rem;color:var(--bcc-text-light);margin-top:8px;">Error: ±10-15%</div>
+      </div>
+      <div style="text-align:center;padding:24px;background:var(--bcc-light);border-radius:var(--bcc-radius);border:2px solid var(--bcc-border);">
+        <div style="font-size:0.85rem;color:var(--bcc-text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Body Fat %</div>
+        <div style="font-size:2.5rem;font-weight:700;color:var(--bcc-primary);font-family:var(--bcc-font-heading);" id="res-bf">--</div>
+        <div style="font-size:1rem;color:var(--bcc-text-light);margin-top:4px;" id="res-bf-cat">--</div>
+        <div style="font-size:0.8rem;color:var(--bcc-text-light);margin-top:8px;">Error: ±3-5%</div>
+      </div>
+    </div>
+    <div id="bmi-alert" style="margin:16px 0;padding:16px;border-radius:var(--bcc-radius-sm);display:none;"></div>
+    <canvas id="bmi-chart" width="600" height="200" style="width:100%;max-width:600px;margin:24px auto;display:block;"></canvas>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+      <button class="bcc-btn bcc-btn-secondary" onclick="saveBMI()">💾 Save</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="exportBMI()">📄 Export</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="resetBMI()" style="margin-left:auto;">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="bmi-history-panel">
+    <h3>📊 Comparison History</h3>
+    <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">Track how your BMI and body fat change over time. Stored locally.</p>
+    <div id="bmi-history-list" style="max-height:300px;overflow-y:auto;">
+      <p style="color:var(--bcc-text-light);font-style:italic;">No saved comparisons yet.</p>
+    </div>
+    <canvas id="bmi-history-chart" width="600" height="250" style="width:100%;max-width:600px;margin:24px auto;display:none;"></canvas>
+  </div>
+
+  <div class="bcc-ad-slot" id="tool_middle" data-ad-slot="tool_middle"></div>
+
+<div class="bcc-article-tail" style="margin-top:48px;">
+    <div class="bcc-tail-related">
+      <h3>Related Articles</h3>
+      <div class="bcc-tail-card">
+        <a href="../blog/bmi-fails-athletes.html" class="bcc-tail-card-title">Why BMI Fails Athletes</a>
+        <p class="bcc-tail-card-desc">The science of false positives and why the old shortcut misses muscle.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/normal-weight-obesity.html" class="bcc-tail-card-title">What Is Normal Weight Obesity</a>
+        <p class="bcc-tail-card-desc">BMI says normal. Body fat says otherwise. Up to 30% of adults affected.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/sarah-dexa-scan-bmi.html" class="bcc-tail-card-title">Sarah's DEXA Changed Her Doctor's Mind</a>
+        <p class="bcc-tail-card-desc">How one patient brought data to her annual physical and changed the conversation.</p>
+      </div>
+    </div>
+    <div class="bcc-tail-tools">
+      <h3>Recommended Tools</h3>
+      <div class="bcc-tail-card">
+        <a href="body-fat-estimator.html" class="bcc-tail-card-title">📏 Body Fat Estimator</a>
+        <p class="bcc-tail-card-desc">Get your body fat percentage without a DEXA scan.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="lean-mass-calculator.html" class="bcc-tail-card-title">💪 Lean Body Mass Calculator</a>
+        <p class="bcc-tail-card-desc">See how much of your weight is actually muscle.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="recomposition-planner.html" class="bcc-tail-card-title">📊 Recomposition Planner</a>
+        <p class="bcc-tail-card-desc">Plan your path from current to goal body composition.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bcc-ad-slot" id="tool_bottom" data-ad-slot="tool_bottom"></div>
+
+<footer class="bcc-footer">
+  <div class="bcc-container bcc-footer-grid">
+    <div><h4>Tools</h4><ul><li><a href="body-fat-estimator.html">Body Fat Estimator</a></li><li><a href="bmi-analyzer.html">BMI vs Body Fat</a></li><li><a href="lean-mass-calculator.html">Lean Body Mass</a></li><li><a href="skinfold-tracker.html">Skinfold Tracker</a></li><li><a href="bia-guide.html">BIA Guide</a></li><li><a href="recomposition-planner.html">Recomposition Planner</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="../blog/index.html">Blog</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../disclaimer.html">Disclaimer</a></li><li><a href="../disclosure.html">Disclosure</a></li></ul></div>
+    <div><h4>BodyCompCheck</h4><p style="font-size:0.85rem;opacity:0.7;line-height:1.6;">Free tools and evidence-based articles to help you understand your body composition numbers.</p></div>
+  </div>
+  <div class="bcc-container bcc-footer-bottom"><p>&copy; 2026 BodyCompCheck. All rights reserved.</p></div>
+</footer>
+
+<script src="../ads-loader.js"></script>
+<script>
+(function() {
+  'use strict';
+  var current = null;
+
+  function analyzeBMI() {
+    var sex = document.getElementById('bmi-sex').value;
+    var age = parseFloat(document.getElementById('bmi-age').value) || 30;
+    var height = parseFloat(document.getElementById('bmi-height').value) || 70;
+    var weight = parseFloat(document.getElementById('bmi-weight').value) || 180;
+    var bf = parseFloat(document.getElementById('bmi-bf').value) || 20;
+    var activity = document.getElementById('bmi-activity').value;
+    var hM = height * 0.0254;
+    var wKg = weight * 0.453592;
+    var bmi = wKg / (hM * hM);
+    var bmiCat = bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal' : bmi < 30 ? 'Overweight' : 'Obese';
+    var bfCat = sex === 'male' ? (bf < 6 ? 'Essential' : bf < 14 ? 'Athletes' : bf < 18 ? 'Fitness' : bf < 25 ? 'Acceptable' : 'Obese') : (bf < 14 ? 'Essential' : bf < 21 ? 'Athletes' : bf < 25 ? 'Fitness' : bf < 32 ? 'Acceptable' : 'Obese');
+    var alertDiv = document.getElementById('bmi-alert');
+    var alertMsg = '';
+    var alertColor = '';
+    if (bmi >= 25 && bf < (sex === 'male' ? 18 : 25)) {
+      alertMsg = '⚠️ BMI False Positive Detected: Your BMI says "' + bmiCat + '" but your body fat is in the "' + bfCat + '" range. You likely have above-average muscle mass. BMI is the old shortcut — trust your body fat percentage.';
+      alertColor = '#fff3cd';
+    } else if (bmi < 25 && bf > (sex === 'male' ? 25 : 30)) {
+      alertMsg = '⚠️ Normal Weight Obesity Detected: Your BMI says "' + bmiCat + '" but your body fat is in the "' + bfCat + '" range. This carries metabolic health risks that BMI misses.';
+      alertColor = '#f8d7da';
+    } else {
+      alertMsg = '✅ BMI and body fat agree: Both place you in the ' + (bmiCat === bfCat ? '"' + bmiCat + '"' : 'similar') + ' range.';
+      alertColor = '#d4edda';
+    }
+    alertDiv.textContent = alertMsg;
+    alertDiv.style.background = alertColor;
+    alertDiv.style.display = 'block';
+    document.getElementById('res-bmi').textContent = bmi.toFixed(1);
+    document.getElementById('res-bmi-cat').textContent = bmiCat;
+    document.getElementById('res-bf').textContent = bf.toFixed(1) + '%';
+    document.getElementById('res-bf-cat').textContent = bfCat;
+    document.getElementById('bmi-results').style.display = 'block';
+    current = { bmi: bmi, bmiCat: bmiCat, bf: bf, bfCat: bfCat, alert: alertMsg, sex: sex, activity: activity, date: new Date().toISOString() };
+    drawBMIChart(bmi, bf, sex);
+    document.getElementById('bmi-results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function drawBMIChart(bmi, bf, sex) {
+    var canvas = document.getElementById('bmi-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    // BMI bar
+    var bmiMax = 40;
+    var bmiColors = ['#3498db','#2ecc71','#f39c12','#e74c3c'];
+    var bmiLabels = ['Underweight','Normal','Overweight','Obese'];
+    var bmiCuts = [18.5, 25, 30, 40];
+    var barH = 25, y1 = 30;
+    ctx.fillStyle = '#333'; ctx.font = 'bold 14px sans-serif'; ctx.fillText('BMI', 10, y1 + 18);
+    var prev = 0;
+    for (var i = 0; i < 4; i++) {
+      var bw = ((bmiCuts[i] - prev) / bmiMax) * (w - 100);
+      ctx.fillStyle = bmiColors[i];
+      ctx.fillRect(80, y1, bw, barH);
+      ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif';
+      ctx.fillText(bmiLabels[i], 85, y1 + 17);
+      prev = bmiCuts[i];
+    }
+    var bmiX = 80 + (bmi / bmiMax) * (w - 100);
+    ctx.fillStyle = '#2D6A4F'; ctx.beginPath(); ctx.moveTo(bmiX, y1 - 5); ctx.lineTo(bmiX - 6, y1 - 15); ctx.lineTo(bmiX + 6, y1 - 15); ctx.closePath(); ctx.fill();
+    // BF bar
+    var bfMax = sex === 'male' ? 35 : 40;
+    var bfColors = ['#e74c3c','#3498db','#2ecc71','#f39c12','#e67e22'];
+    var bfLabelsM = ['Essential','Athletes','Fitness','Acceptable','Obese'];
+    var bfCutsM = [6, 14, 18, 25, 35];
+    var bfLabelsF = ['Essential','Athletes','Fitness','Acceptable','Obese'];
+    var bfCutsF = [14, 21, 25, 32, 40];
+    var bfLabels = sex === 'male' ? bfLabelsM : bfLabelsF;
+    var bfCuts = sex === 'male' ? bfCutsM : bfCutsF;
+    var y2 = 100;
+    ctx.fillStyle = '#333'; ctx.font = 'bold 14px sans-serif'; ctx.fillText('BF%', 10, y2 + 18);
+    prev = 0;
+    for (var j = 0; j < 5; j++) {
+      var bw2 = ((bfCuts[j] - prev) / bfMax) * (w - 100);
+      ctx.fillStyle = bfColors[j];
+      ctx.fillRect(80, y2, bw2, barH);
+      ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif';
+      ctx.fillText(bfLabels[j], 85, y2 + 17);
+      prev = bfCuts[j];
+    }
+    var bfX = 80 + (bf / bfMax) * (w - 100);
+    ctx.fillStyle = '#2D6A4F'; ctx.beginPath(); ctx.moveTo(bfX, y2 - 5); ctx.lineTo(bfX - 6, y2 - 15); ctx.lineTo(bfX + 6, y2 - 15); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#2D6A4F'; ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('You', Math.min(bmiX, w - 40), y1 - 20);
+    ctx.fillText('You', Math.min(bfX, w - 40), y2 - 20);
+  }
+
+  function saveBMI() {
+    if (!current) return;
+    var history = JSON.parse(localStorage.getItem('bcc-bmi-history') || '[]');
+    history.push(current);
+    localStorage.setItem('bcc-bmi-history', JSON.stringify(history));
+    renderBMIHistory();
+  }
+
+  function renderBMIHistory() {
+    var history = JSON.parse(localStorage.getItem('bcc-bmi-history') || '[]');
+    var list = document.getElementById('bmi-history-list');
+    if (history.length === 0) {
+      list.innerHTML = '<p style="color:var(--bcc-text-light);font-style:italic;">No saved comparisons yet.</p>';
+      document.getElementById('bmi-history-chart').style.display = 'none';
+      return;
+    }
+    var html = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Date</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">BMI</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">BF%</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Status</th></tr></thead><tbody>';
+    history.slice().reverse().forEach(function(h) {
+      var d = new Date(h.date).toLocaleDateString();
+      var status = h.alert.substring(0, 2);
+      html += '<tr><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + d + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.bmi.toFixed(1) + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.bf.toFixed(1) + '%</td><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + status + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    list.innerHTML = html;
+    document.getElementById('bmi-history-chart').style.display = 'block';
+    drawBMIHistoryChart(history);
+  }
+
+  function drawBMIHistoryChart(history) {
+    var canvas = document.getElementById('bmi-history-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    if (history.length < 2) return;
+    var pad = 40;
+    var chartW = w - pad * 2;
+    var chartH = h - pad * 2;
+    var bmis = history.map(function(h) { return h.bmi; });
+    var bfs = history.map(function(h) { return h.bf; });
+    var min1 = Math.min.apply(null, bmis) - 1;
+    var max1 = Math.max.apply(null, bmis) + 1;
+    var min2 = Math.min.apply(null, bfs) - 2;
+    var max2 = Math.max.apply(null, bfs) + 2;
+    // Axes
+    ctx.strokeStyle = '#ccc'; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+    // BMI line
+    ctx.strokeStyle = '#3498db'; ctx.lineWidth = 2; ctx.beginPath();
+    history.forEach(function(h, i) {
+      var x = pad + (i / (history.length - 1)) * chartW;
+      var y = h - pad - ((h.bmi - min1) / (max1 - min1)) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // BF line
+    ctx.strokeStyle = '#2D6A4F'; ctx.beginPath();
+    history.forEach(function(h, i) {
+      var x = pad + (i / (history.length - 1)) * chartW;
+      var y = h - pad - ((h.bf - min2) / (max2 - min2)) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Legend
+    ctx.fillStyle = '#3498db'; ctx.fillRect(w - 120, 10, 12, 12); ctx.fillStyle = '#333'; ctx.font = '12px sans-serif'; ctx.fillText('BMI', w - 100, 20);
+    ctx.fillStyle = '#2D6A4F'; ctx.fillRect(w - 120, 28, 12, 12); ctx.fillStyle = '#333'; ctx.fillText('BF%', w - 100, 38);
+  }
+
+  function exportBMI() {
+    if (!current) return;
+    var text = 'BodyCompCheck — BMI vs Body Fat Analyzer Report\n';
+    text += 'Generated: ' + new Date().toLocaleString() + '\n\n';
+    text += 'BMI: ' + current.bmi.toFixed(1) + ' (' + current.bmiCat + ')\n';
+    text += 'Body Fat: ' + current.bf.toFixed(1) + '% (' + current.bfCat + ')\n';
+    text += 'Sex: ' + current.sex + '\n';
+    text += 'Activity: ' + current.activity + '\n\n';
+    text += 'Alert: ' + current.alert + '\n\n';
+    text += 'Disclaimer: This is an estimate, not a medical measurement.\n';
+    var blob = new Blob([text], {type: 'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'bodycompcheck-bmi-analysis.txt'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  function resetBMI() {
+    document.getElementById('bmi-results').style.display = 'none';
+    current = null;
+    document.getElementById('bmi-age').value = '30';
+    document.getElementById('bmi-height').value = '70';
+    document.getElementById('bmi-weight').value = '180';
+    document.getElementById('bmi-bf').value = '20';
+  }
+
+  renderBMIHistory();
+  window.analyzeBMI = analyzeBMI;
+  window.saveBMI = saveBMI;
+  window.exportBMI = exportBMI;
+  window.resetBMI = resetBMI;
+})();
+</script>
+</body>
+</html>
