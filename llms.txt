@@ -1,0 +1,50 @@
+# bodycompcheck
+
+Free online calculators and educational content. Not professional advice.
+
+## Pages
+- Home: https://bodycompcheck.com/
+- Tools: https://bodycompcheck.com/tools/
+- Blog: https://bodycompcheck.com/blog/
+- About: https://bodycompcheck.com/about.html
+- Contact: https://bodycompcheck.com/contact.html
+- FAQ: https://bodycompcheck.com/faq.html
+- Sitemap: https://bodycompcheck.com/sitemap.html
+
+## Tools
+- Body Fat Percentage Estimator — BodyCompCheck: https://bodycompcheck.com/tools/body-fat-estimator.html
+- BMI vs Body Fat Analyzer — BodyCompCheck: https://bodycompcheck.com/tools/bmi-analyzer.html
+- Lean Body Mass Calculator — BodyCompCheck: https://bodycompcheck.com/tools/lean-mass-calculator.html
+- Skinfold Measurement Tracker — BodyCompCheck: https://bodycompcheck.com/tools/skinfold-tracker.html
+- Bioelectrical Impedance Guide — BodyCompCheck: https://bodycompcheck.com/tools/bia-guide.html
+- Body Recomposition Planner — BodyCompCheck: https://bodycompcheck.com/tools/recomposition-planner.html
+
+## Articles
+- Skinny Fat Body Composition Myth 2026 (skinny-fat-body-composition-myth-2026) -- I weigh 125 pounds. I am 5'6". My BMI is 20.2. Perfectly normal. My doctor never mentions my weight. My family calls me "skinny." And yet my body fat percentage is 32%. I am what the fitness industry -- July 23, 2026
+- The Dexa Scan That Changed How I See My Body (the-dexa-scan-that-changed-how-i-see-my-body) -- The DEXA Scan That Changed How I See My Body I stepped onto the DEXA platform at the fitness studio on NW 23rd wearing nothing but a sports bra and compression shorts, and I was terrified. Not of the -- July 16, 2026
+- Portland Heat Body Composition Scale Lies (portland-heat-body-composition-scale-lies) -- My Body Composition Changed 8% in One Month—And It Had Nothing to Do with My Gym Routine Emily Clarke I stepped on my bioimpedance scale on August 1st and nearly fell off. The app told me my body fat -- July 06, 2026
+- Smart Scale Gained Muscle Jeans Said Otherwise (smart-scale-gained-muscle-jeans-said-otherwise) -- The scale congratulated me. It flashed a green arrow and a cheerful message: "Muscle mass increased by 8.2 lbs!" I stood there in my bathroom, naked and skeptical, staring at a number that contradicte -- July 06, 2026
+- The 2026 No-Scale Challenge: Why Portland's Fitness Community Ditched the Scale - BodyCompCheck (2026-no-scale-challenge-portland) -- The 2026 No-Scale Challenge: Why Portland's Fitness Community Ditched the Scale — BodyCompCheck -- June 25, 2026
+- Why Does My Doctor Keep Using Bmi (why-does-my-doctor-keep-using-bmi) -- Why Does My Doctor Keep Using BMI When I Can See My Abs? Have you ever walked out of a doctor's appointment feeling more confused than when you walked in? I did. Last month. I was there for my annual -- June 24, 2026
+- How to Track Lean Body Mass Progress Without Obsessing Over the Scale - BodyCompCheck (track-lean-body-mass) -- How to Track Lean Body Mass Progress Without Obsessing Over the Scale — BodyCompCheck -- June 07, 2026
+- The Perfect Morning Routine for Consistent BIA Readings - BodyCompCheck (morning-routine-bia-readings) -- The Perfect Morning Routine for Consistent BIA Readings — BodyCompCheck -- May 21, 2026
+- How a Home BIA Scale Nearly Cost David His Competition Prep - BodyCompCheck (home-bia-scale-competition-prep) -- How a Home BIA Scale Nearly Cost David His Competition Prep — BodyCompCheck -- May 02, 2026
+- The 7-Site Skinfold Protocol: Step-by-Step for Self-Measurement - BodyCompCheck (7-site-skinfold-protocol) -- The 7-Site Skinfold Protocol: Step-by-Step for Self-Measurement — BodyCompCheck -- April 16, 2026
+- Navy Method vs. 3-Site Skinfold: Battle of the Estimators - BodyCompCheck (navy-method-vs-3-site-skinfold) -- Navy Method vs. 3-Site Skinfold: Battle of the Estimators — BodyCompCheck -- March 29, 2026
+- Consumer BIA Scales vs. Professional Devices: The Real Accuracy Gap - BodyCompCheck (consumer-bia-vs-professional) -- Consumer BIA Scales vs. Professional Devices: The Real Accuracy Gap — BodyCompCheck -- March 17, 2026
+- Essential Fat vs. Storage Fat: What Your Body Actually Needs - BodyCompCheck (essential-fat-vs-storage-fat) -- Essential Fat vs. Storage Fat: What Your Body Actually Needs — BodyCompCheck -- March 04, 2026
+- Hydration Strategies for Accurate Body Composition Testing - BodyCompCheck (hydration-strategies-body-composition) -- Hydration Strategies for Accurate Body Composition Testing — BodyCompCheck -- February 09, 2026
+- How Marcus Learned His 'Weight Gain' Was Actually Muscle - BodyCompCheck (marcus-weight-gain-muscle) -- How Marcus Learned His 'Weight Gain' Was Actually Muscle — BodyCompCheck -- January 30, 2026
+- Why BMI Fails Athletes: The Science of False Positives - BodyCompCheck (bmi-fails-athletes) -- Why BMI Fails Athletes: The Science of False Positives — BodyCompCheck -- January 13, 2026
+- How to Read Your DEXA Scan Results Like a Physiologist - BodyCompCheck (read-dexa-scan-results) -- How to Read Your DEXA Scan Results Like a Physiologist — BodyCompCheck -- December 24, 2025
+- The Accuracy Hierarchy: Ranking Every Body Composition Method - BodyCompCheck (accuracy-hierarchy-body-composition) -- The Accuracy Hierarchy: Ranking Every Body Composition Method — BodyCompCheck -- December 08, 2025
+- Bod Pod vs. DEXA: Which Scan Is Right for You? - BodyCompCheck (bod-pod-vs-dexa) -- Bod Pod vs. DEXA: Which Scan Is Right for You? — BodyCompCheck -- November 27, 2025
+- Muscle Density vs. Fat Density: Why Volume Matters More Than Weight - BodyCompCheck (muscle-density-vs-fat-density) -- Muscle Density vs. Fat Density: Why Volume Matters More Than Weight — BodyCompCheck -- November 07, 2025
+- A Portland CrossFitter's Fight Against 'Normal Weight Obesity' - BodyCompCheck (portland-crossfitter-normal-weight-obesity) -- A Portland CrossFitter's Fight Against 'Normal Weight Obesity' — BodyCompCheck -- October 20, 2025
+- How to Calculate Your True Body Fat Percentage From Multiple Methods - BodyCompCheck (calculate-true-body-fat) -- How to Calculate Your True Body Fat Percentage From Multiple Methods — BodyCompCheck -- October 09, 2025
+- How to Measure Body Fat at Home: A Complete Guide to Skin Calipers - BodyCompCheck (measure-body-fat-skin-calipers) -- How to Measure Body Fat at Home: A Complete Guide to Skin Calipers — BodyCompCheck -- September 15, 2025
+- Sarah's DEXA Scan Changed Her Doctor's Mind About BMI - BodyCompCheck (sarah-dexa-scan-bmi) -- Sarah's DEXA Scan Changed Her Doctor's Mind About BMI — BodyCompCheck -- August 31, 2025
+- What Is Normal Weight Obesity and Why Doctors Miss It - BodyCompCheck (normal-weight-obesity) -- What Is Normal Weight Obesity and Why Doctors Miss It — BodyCompCheck -- August 23, 2025
+- Body Recomposition Meal Planning: Protein Targets and Calorie Math - BodyCompCheck (body-recomposition-meal-planning) -- Body Recomposition Meal Planning: Protein Targets and Calorie Math — BodyCompCheck -- August 02, 2025
+- When the Scale Lied: Jenna's Body Recomposition Journey - BodyCompCheck (scale-lied-jenna-recomposition) -- When the Scale Lied: Jenna's Body Recomposition Journey — BodyCompCheck -- July 16, 2025
+- Oregon's New Body Testing Disclosure Law: What It Means for Your Gym - BodyCompCheck (oregon-body-testing-disclosure-law) -- Oregon's New Body Testing Disclosure Law: What It Means for Your Gym — BodyCompCheck -- June 27, 2025
