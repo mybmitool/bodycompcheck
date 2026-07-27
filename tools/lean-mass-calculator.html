@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean Body Mass Calculator — BodyCompCheck</title>
+<meta name="description" content="Calculate lean body mass from weight and body fat percentage. Includes bone mass estimate, organ mass reference ranges, and residual mass breakdown.">
+<link rel="canonical" href="https://bodycompcheck.com/tools/lean-mass-calculator.html">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<meta property="og:title" content="Lean Body Mass Calculator — BodyCompCheck">
+<meta property="og:description" content="Calculate lean body mass from weight and body fat percentage.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bodycompcheck.com/tools/lean-mass-calculator.html">
+<meta property="og:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lean Body Mass Calculator">
+<meta name="twitter:description" content="Calculate lean body mass from weight and body fat percentage.">
+<meta name="twitter:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Lean Body Mass Calculator",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Calculate lean body mass from weight and body fat percentage. Includes bone mass estimate and organ mass reference ranges.",
+  "url": "https://bodycompcheck.com/tools/lean-mass-calculator.html",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Clarke",
+    "url": "https://bodycompcheck.com/about.html"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="bcc-nav">
+  <div class="bcc-container bcc-nav-inner">
+    <a href="../index.html" class="bcc-logo">BodyComp<span>Check</span></a>
+    <button class="bcc-nav-toggle" onclick="document.querySelector('.bcc-nav-links').classList.toggle('active')">&#9776;</button>
+    <ul class="bcc-nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Tools</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="bcc-ad-slot" id="tool_top" data-ad-slot="tool_top"></div>
+
+<div class="bcc-tool-layout-d">
+  <h1>💪 Lean Body Mass Calculator</h1>
+  <p class="tool-subtitle">Your weight is not just fat and muscle. Break it down. All data stays in your browser.</p>
+
+  <div class="bcc-tool-card-minimal">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+        <select id="lbm-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Weight (lbs)</label>
+        <input type="number" id="lbm-weight" value="180" min="80" max="500" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Body Fat %</label>
+        <input type="number" id="lbm-bf" value="20" min="2" max="60" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Height (inches)</label>
+        <input type="number" id="lbm-height" value="70" min="48" max="96" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+    </div>
+    <button class="bcc-btn bcc-btn-primary" onclick="calcLBM()" style="width:100%;">Calculate Lean Mass</button>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="how-it-works">
+  <h3>How It Works</h3>
+  <p style="color:var(--bcc-text-light);font-size:0.95rem;margin-bottom:16px;line-height:1.7;">
+    Lean body mass is everything in your body that is <strong>not fat</strong> — muscle, bone, organs, skin, blood, and water. This calculator subtracts your fat mass from total weight to get lean mass, then breaks it down into estimated components. <strong>Muscle mass</strong> is derived by subtracting bone, organ, and skin/blood estimates from total lean mass. <strong>Bone mass</strong> is estimated from your height and sex using population averages. <strong>Organ mass</strong> uses reference ranges for brain, liver, heart, and kidneys. These are estimates, not DEXA-level precision, but they give you a useful picture of what your weight actually consists of.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.9rem;color:var(--bcc-text-light);">
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Input</strong><br>
+      Weight + Body Fat % + Height + Sex
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Output</strong><br>
+      Fat mass + Lean mass breakdown
+    </div>
+  </div>
+  <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:16px;">
+    <strong>Tip:</strong> Use this calculator after getting your body fat % from the <a href="body-fat-estimator.html">Body Fat Estimator</a> or a DEXA scan. Track lean mass over time — if it is going up while fat is stable, you are recomping successfully even if the scale does not move.
+  </p>
+</div>
+
+<div class="bcc-tool-card-minimal" id="lbm-results" style="display:none;">
+    <h3>Your Body Composition Breakdown</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0;">
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:2rem;font-weight:700;color:var(--bcc-primary);font-family:var(--bcc-font-heading);" id="res-total">--</div>
+        <div style="font-size:0.85rem;color:var(--bcc-text-light);margin-top:4px;">Total Weight (lbs)</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:2rem;font-weight:700;color:var(--bcc-secondary);font-family:var(--bcc-font-heading);" id="res-lean">--</div>
+        <div style="font-size:0.85rem;color:var(--bcc-text-light);margin-top:4px;">Lean Mass (lbs)</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:2rem;font-weight:700;color:#e74c3c;font-family:var(--bcc-font-heading);" id="res-fat">--</div>
+        <div style="font-size:0.85rem;color:var(--bcc-text-light);margin-top:4px;">Fat Mass (lbs)</div>
+      </div>
+    </div>
+
+    <h4 style="margin:24px 0 12px;">Lean Mass Breakdown (Estimated)</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div style="padding:12px;background:var(--bcc-accent);border-radius:var(--bcc-radius-sm);">
+        <strong style="color:var(--bcc-dark);">Muscle Mass:</strong> <span id="res-muscle">--</span> lbs
+        <p style="font-size:0.8rem;color:var(--bcc-text-light);margin:4px 0 0;">Skeletal muscle — the contractile tissue.</p>
+      </div>
+      <div style="padding:12px;background:var(--bcc-accent);border-radius:var(--bcc-radius-sm);">
+        <strong style="color:var(--bcc-dark);">Bone Mass:</strong> <span id="res-bone">--</span> lbs
+        <p style="font-size:0.8rem;color:var(--bcc-text-light);margin:4px 0 0;">Estimated from height and sex. Not measured.</p>
+      </div>
+      <div style="padding:12px;background:var(--bcc-accent);border-radius:var(--bcc-radius-sm);">
+        <strong style="color:var(--bcc-dark);">Organ Mass:</strong> <span id="res-organ">--</span> lbs
+        <p style="font-size:0.8rem;color:var(--bcc-text-light);margin:4px 0 0;">Brain, liver, heart, kidneys, etc. Reference ranges.</p>
+      </div>
+      <div style="padding:12px;background:var(--bcc-accent);border-radius:var(--bcc-radius-sm);">
+        <strong style="color:var(--bcc-dark);">Skin & Blood:</strong> <span id="res-skin">--</span> lbs
+        <p style="font-size:0.8rem;color:var(--bcc-text-light);margin:4px 0 0;">Integumentary and circulatory systems.</p>
+      </div>
+    </div>
+
+    <canvas id="lbm-pie" width="400" height="300" style="width:100%;max-width:400px;margin:24px auto;display:block;"></canvas>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+      <button class="bcc-btn bcc-btn-secondary" onclick="saveLBM()">💾 Save</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="exportLBM()">📄 Export</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="resetLBM()" style="margin-left:auto;">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="lbm-history-panel">
+    <h3>📊 Tracking History</h3>
+    <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">Watch your lean mass grow and fat mass shrink over time. Stored locally.</p>
+    <div id="lbm-history-list" style="max-height:300px;overflow-y:auto;">
+      <p style="color:var(--bcc-text-light);font-style:italic;">No saved calculations yet.</p>
+    </div>
+    <canvas id="lbm-history-chart" width="600" height="250" style="width:100%;max-width:600px;margin:24px auto;display:none;"></canvas>
+  </div>
+
+  <div class="bcc-ad-slot" id="tool_middle" data-ad-slot="tool_middle"></div>
+
+<div class="bcc-article-tail" style="margin-top:48px;">
+    <div class="bcc-tail-related">
+      <h3>Related Articles</h3>
+      <div class="bcc-tail-card">
+        <a href="../blog/marcus-weight-gain-muscle.html" class="bcc-tail-card-title">How Marcus Learned His 'Weight Gain' Was Muscle</a>
+        <p class="bcc-tail-card-desc">The scale went up. Lean mass went up. Fat went down.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/track-lean-body-mass.html" class="bcc-tail-card-title">Track Lean Body Mass Without the Scale</a>
+        <p class="bcc-tail-card-desc">Five ways to track progress without obsessing over weight.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/muscle-density-vs-fat-density.html" class="bcc-tail-card-title">Muscle Density vs. Fat Density</a>
+        <p class="bcc-tail-card-desc">Why volume matters more than weight. The physics of recomposition.</p>
+      </div>
+    </div>
+    <div class="bcc-tail-tools">
+      <h3>Recommended Tools</h3>
+      <div class="bcc-tail-card">
+        <a href="body-fat-estimator.html" class="bcc-tail-card-title">📏 Body Fat Estimator</a>
+        <p class="bcc-tail-card-desc">Get your body fat percentage first, then calculate lean mass.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="recomposition-planner.html" class="bcc-tail-card-title">📊 Recomposition Planner</a>
+        <p class="bcc-tail-card-desc">Plan your timeline from current lean mass to goal.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="skinfold-tracker.html" class="bcc-tail-card-title">📝 Skinfold Tracker</a>
+        <p class="bcc-tail-card-desc">Log measurements to track lean mass changes over time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bcc-ad-slot" id="tool_bottom" data-ad-slot="tool_bottom"></div>
+
+<footer class="bcc-footer">
+  <div class="bcc-container bcc-footer-grid">
+    <div><h4>Tools</h4><ul><li><a href="body-fat-estimator.html">Body Fat Estimator</a></li><li><a href="bmi-analyzer.html">BMI vs Body Fat</a></li><li><a href="lean-mass-calculator.html">Lean Body Mass</a></li><li><a href="skinfold-tracker.html">Skinfold Tracker</a></li><li><a href="bia-guide.html">BIA Guide</a></li><li><a href="recomposition-planner.html">Recomposition Planner</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="../blog/index.html">Blog</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../disclaimer.html">Disclaimer</a></li><li><a href="../disclosure.html">Disclosure</a></li></ul></div>
+    <div><h4>BodyCompCheck</h4><p style="font-size:0.85rem;opacity:0.7;line-height:1.6;">Free tools and evidence-based articles to help you understand your body composition numbers.</p></div>
+  </div>
+  <div class="bcc-container bcc-footer-bottom"><p>&copy; 2026 BodyCompCheck. All rights reserved.</p></div>
+</footer>
+
+<script src="../ads-loader.js"></script>
+<script>
+(function() {
+  'use strict';
+  var current = null;
+
+  function calcLBM() {
+    var sex = document.getElementById('lbm-sex').value;
+    var weight = parseFloat(document.getElementById('lbm-weight').value) || 180;
+    var bf = parseFloat(document.getElementById('lbm-bf').value) || 20;
+    var height = parseFloat(document.getElementById('lbm-height').value) || 70;
+    var fatMass = weight * (bf / 100);
+    var leanMass = weight - fatMass;
+    // Estimates
+    var boneMass = sex === 'male' ? (height * 0.12) : (height * 0.10);
+    var organMass = sex === 'male' ? 8.5 : 6.5; // brain ~3, liver ~3.5, heart ~0.7, kidneys ~0.5, etc.
+    var skinBlood = leanMass * 0.08;
+    var muscleMass = leanMass - boneMass - organMass - skinBlood;
+    if (muscleMass < 0) muscleMass = leanMass * 0.6; // fallback
+    document.getElementById('res-total').textContent = weight.toFixed(1);
+    document.getElementById('res-lean').textContent = leanMass.toFixed(1);
+    document.getElementById('res-fat').textContent = fatMass.toFixed(1);
+    document.getElementById('res-muscle').textContent = muscleMass.toFixed(1);
+    document.getElementById('res-bone').textContent = boneMass.toFixed(1);
+    document.getElementById('res-organ').textContent = organMass.toFixed(1);
+    document.getElementById('res-skin').textContent = skinBlood.toFixed(1);
+    document.getElementById('lbm-results').style.display = 'block';
+    current = { weight: weight, bf: bf, lean: leanMass, fat: fatMass, muscle: muscleMass, bone: boneMass, organ: organMass, skin: skinBlood, sex: sex, date: new Date().toISOString() };
+    drawPie(fatMass, muscleMass, boneMass, organMass, skinBlood);
+    document.getElementById('lbm-results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function drawPie(fat, muscle, bone, organ, skin) {
+    var canvas = document.getElementById('lbm-pie');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    var cx = w / 2, cy = h / 2, r = Math.min(w, h) / 2 - 20;
+    var total = fat + muscle + bone + organ + skin;
+    var data = [
+      {label:'Fat',value:fat,color:'#e74c3c'},
+      {label:'Muscle',value:muscle,color:'#2ecc71'},
+      {label:'Bone',value:bone,color:'#95a5a6'},
+      {label:'Organs',value:organ,color:'#f39c12'},
+      {label:'Skin/Blood',value:skin,color:'#3498db'}
+    ];
+    var start = -Math.PI / 2;
+    ctx.clearRect(0, 0, w, h);
+    data.forEach(function(d) {
+      var angle = (d.value / total) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, start, start + angle);
+      ctx.closePath();
+      ctx.fillStyle = d.color;
+      ctx.fill();
+      start += angle;
+    });
+    // Legend
+    var lx = 10, ly = 10;
+    data.forEach(function(d) {
+      ctx.fillStyle = d.color;
+      ctx.fillRect(lx, ly, 12, 12);
+      ctx.fillStyle = '#333';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(d.label + ' ' + ((d.value/total)*100).toFixed(1) + '%', lx + 18, ly + 10);
+      ly += 18;
+    });
+  }
+
+  function saveLBM() {
+    if (!current) return;
+    var history = JSON.parse(localStorage.getItem('bcc-lbm-history') || '[]');
+    history.push(current);
+    localStorage.setItem('bcc-lbm-history', JSON.stringify(history));
+    renderLBMHistory();
+  }
+
+  function renderLBMHistory() {
+    var history = JSON.parse(localStorage.getItem('bcc-lbm-history') || '[]');
+    var list = document.getElementById('lbm-history-list');
+    if (history.length === 0) {
+      list.innerHTML = '<p style="color:var(--bcc-text-light);font-style:italic;">No saved calculations yet.</p>';
+      document.getElementById('lbm-history-chart').style.display = 'none';
+      return;
+    }
+    var html = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Date</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Weight</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">BF%</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Lean</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Fat</th></tr></thead><tbody>';
+    history.slice().reverse().forEach(function(h) {
+      var d = new Date(h.date).toLocaleDateString();
+      html += '<tr><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + d + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.weight.toFixed(0) + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.bf.toFixed(1) + '%</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);"><strong>' + h.lean.toFixed(1) + '</strong></td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.fat.toFixed(1) + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    list.innerHTML = html;
+    document.getElementById('lbm-history-chart').style.display = 'block';
+    drawLBMHistoryChart(history);
+  }
+
+  function drawLBMHistoryChart(history) {
+    var canvas = document.getElementById('lbm-history-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    if (history.length < 2) return;
+    var pad = 40;
+    var chartW = w - pad * 2;
+    var chartH = h - pad * 2;
+    var leans = history.map(function(h) { return h.lean; });
+    var fats = history.map(function(h) { return h.fat; });
+    var min = Math.min.apply(null, leans.concat(fats)) - 5;
+    var max = Math.max.apply(null, leans.concat(fats)) + 5;
+    // Axes
+    ctx.strokeStyle = '#ccc'; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+    // Lean line
+    ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 2; ctx.beginPath();
+    history.forEach(function(h, i) {
+      var x = pad + (i / (history.length - 1)) * chartW;
+      var y = h - pad - ((h.lean - min) / (max - min)) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Fat line
+    ctx.strokeStyle = '#e74c3c'; ctx.beginPath();
+    history.forEach(function(h, i) {
+      var x = pad + (i / (history.length - 1)) * chartW;
+      var y = h - pad - ((h.fat - min) / (max - min)) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Legend
+    ctx.fillStyle = '#2ecc71'; ctx.fillRect(w - 120, 10, 12, 12); ctx.fillStyle = '#333'; ctx.font = '12px sans-serif'; ctx.fillText('Lean Mass', w - 100, 20);
+    ctx.fillStyle = '#e74c3c'; ctx.fillRect(w - 120, 28, 12, 12); ctx.fillStyle = '#333'; ctx.fillText('Fat Mass', w - 100, 38);
+  }
+
+  function exportLBM() {
+    if (!current) return;
+    var text = 'BodyCompCheck — Lean Body Mass Report\n';
+    text += 'Generated: ' + new Date().toLocaleString() + '\n\n';
+    text += 'Total Weight: ' + current.weight.toFixed(1) + ' lbs\n';
+    text += 'Body Fat: ' + current.bf.toFixed(1) + '% (' + current.fat.toFixed(1) + ' lbs)\n';
+    text += 'Lean Mass: ' + current.lean.toFixed(1) + ' lbs\n';
+    text += '  - Muscle: ' + current.muscle.toFixed(1) + ' lbs\n';
+    text += '  - Bone: ' + current.bone.toFixed(1) + ' lbs\n';
+    text += '  - Organs: ' + current.organ.toFixed(1) + ' lbs\n';
+    text += '  - Skin/Blood: ' + current.skin.toFixed(1) + ' lbs\n\n';
+    text += 'Disclaimer: Organ and bone masses are estimates based on population averages.\n';
+    var blob = new Blob([text], {type: 'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'bodycompcheck-lbm-report.txt'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  function resetLBM() {
+    document.getElementById('lbm-results').style.display = 'none';
+    current = null;
+    document.getElementById('lbm-weight').value = '180';
+    document.getElementById('lbm-bf').value = '20';
+    document.getElementById('lbm-height').value = '70';
+  }
+
+  renderLBMHistory();
+  window.calcLBM = calcLBM;
+  window.saveLBM = saveLBM;
+  window.exportLBM = exportLBM;
+  window.resetLBM = resetLBM;
+})();
+</script>
+</body>
+</html>
