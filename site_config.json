@@ -1,0 +1,20 @@
+{
+  "domain": "bodycompcheck.com",
+  "prefix": "bcc",
+  "author": "Emily Clarke",
+  "author_email": "contact@bodycompcheck.com",
+  "site_title": "BodyCompCheck",
+  "site_tagline": "Understand What Your Numbers Actually Mean",
+  "theme_color": "#2D6A4F",
+  "theme_color_secondary": "#40916C",
+  "theme_accent": "#D8F3DC",
+  "font_heading": "'Segoe UI', system-ui, sans-serif",
+  "font_body": "'Georgia', 'Times New Roman', serif",
+  "social_twitter": "",
+  "social_instagram": "",
+  "social_linkedin": "",
+  "favicon": "favicon.ico",
+  "og_default_image": "images/og-default.jpg",
+  "ads_enabled": false,
+  "ga_id": ""
+}
