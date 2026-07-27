@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skinfold Measurement Tracker — BodyCompCheck</title>
+<meta name="description" content="Log your skinfold measurements over time. Site selection guide, mm trend chart, and technician error warnings. All data stored locally.">
+<link rel="canonical" href="https://bodycompcheck.com/tools/skinfold-tracker.html">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<meta property="og:title" content="Skinfold Measurement Tracker — BodyCompCheck">
+<meta property="og:description" content="Log your skinfold measurements over time with trend charts and error warnings.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bodycompcheck.com/tools/skinfold-tracker.html">
+<meta property="og:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skinfold Measurement Tracker">
+<meta name="twitter:description" content="Log your skinfold measurements over time with trend charts.">
+<meta name="twitter:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Skinfold Measurement Tracker",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Log skinfold measurements over time with trend charts and technician error warnings.",
+  "url": "https://bodycompcheck.com/tools/skinfold-tracker.html",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Clarke",
+    "url": "https://bodycompcheck.com/about.html"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="bcc-nav">
+  <div class="bcc-container bcc-nav-inner">
+    <a href="../index.html" class="bcc-logo">BodyComp<span>Check</span></a>
+    <button class="bcc-nav-toggle" onclick="document.querySelector('.bcc-nav-links').classList.toggle('active')">&#9776;</button>
+    <ul class="bcc-nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Tools</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="bcc-ad-slot" id="tool_top" data-ad-slot="tool_top"></div>
+
+<div class="bcc-tool-layout-d">
+  <h1>📝 Skinfold Measurement Tracker</h1>
+  <p class="tool-subtitle">Log your skinfolds. Watch the trend. Ignore the noise. Your data stays in your browser.</p>
+
+  <div class="bcc-tool-card-minimal">
+    <h3 style="margin-bottom:16px;">New Entry</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Date</label>
+        <input type="date" id="sk-date" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Protocol</label>
+        <select id="sk-protocol" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="3">3-Site</option>
+          <option value="7">7-Site</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Sex</label>
+        <select id="sk-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Chest (mm)</label><input type="number" id="sk-chest" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Midax (mm)</label><input type="number" id="sk-midax" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Suprailiac (mm)</label><input type="number" id="sk-supra" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Abdomen (mm)</label><input type="number" id="sk-abd" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Thigh (mm)</label><input type="number" id="sk-thigh" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Triceps (mm)</label><input type="number" id="sk-tri" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Subscap (mm)</label><input type="number" id="sk-sub" value="" min="1" max="80" step="0.5" placeholder="-" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+      <div><label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.85rem;">Age</label><input type="number" id="sk-age" value="30" min="18" max="80" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;"></div>
+    </div>
+    <div style="display:flex;gap:12px;">
+      <button class="bcc-btn bcc-btn-primary" onclick="addEntry()" style="flex:1;">➕ Add Entry</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="clearForm()">Clear</button>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="how-it-works">
+  <h3>How It Works</h3>
+  <p style="color:var(--bcc-text-light);font-size:0.95rem;margin-bottom:16px;line-height:1.7;">
+    This tracker uses the <strong>Jackson-Pollock 3-site and 7-site protocols</strong> to estimate body fat percentage from skinfold thickness measurements. You enter measurements in millimeters for each site, select your protocol (3-site for quick checks, 7-site for more accuracy), and the tool calculates body density using the Siri equation, then converts to body fat percentage. The 3-site protocol uses chest, abdomen, and thigh for men; triceps, suprailiac, and thigh for women. The 7-site adds midaxillary and subscapular for a more complete picture. All entries are saved locally with timestamps so you can track trends over weeks and months.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.9rem;color:var(--bcc-text-light);">
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">3-Site Protocol</strong><br>
+      Error: ±4-6%<br>
+      Time: 3-5 minutes
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">7-Site Protocol</strong><br>
+      Error: ±3-5%<br>
+      Time: 8-12 minutes
+    </div>
+  </div>
+  <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:16px;">
+    <strong>Tip:</strong> Self-measurement error is typically ±8%. For best results, have a trained partner measure for you, or practice the pinching technique until your readings stabilize within 1-2mm across three attempts.
+  </p>
+</div>
+
+<div class="bcc-tool-card-minimal" id="sk-entries-panel">
+    <h3>📋 Logged Entries</h3>
+    <div id="sk-entries-list" style="max-height:400px;overflow-y:auto;margin:16px 0;">
+      <p style="color:var(--bcc-text-light);font-style:italic;">No entries yet. Add your first skinfold measurement above.</p>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal">
+    <h3>📈 Trend Charts</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;">
+      <div>
+        <h4 style="margin-bottom:8px;font-size:0.95rem;">Total Skinfold Sum (mm)</h4>
+        <canvas id="sk-sum-chart" width="400" height="200" style="width:100%;display:block;"></canvas>
+      </div>
+      <div>
+        <h4 style="margin-bottom:8px;font-size:0.95rem;">Estimated Body Fat %</h4>
+        <canvas id="sk-bf-chart" width="400" height="200" style="width:100%;display:block;"></canvas>
+      </div>
+    </div>
+    <div style="margin:16px 0;padding:16px;background:#fff3cd;border-radius:var(--bcc-radius-sm);border-left:4px solid #f39c12;">
+      <p style="margin:0;font-size:0.9rem;color:var(--bcc-dark);"><strong>⚠️ Technician Error Warning:</strong> Self-measurement error is typically ±8%. A skilled technician achieves ±3-5%. Track trends, not absolutes.</p>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal">
+    <h3>📊 Site Breakdown (Latest Entry)</h3>
+    <canvas id="sk-site-chart" width="500" height="250" style="width:100%;max-width:500px;margin:24px auto;display:block;"></canvas>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin:24px 0;">
+    <button class="bcc-btn bcc-btn-secondary" onclick="exportSkData()">📄 Export All Data</button>
+    <button class="bcc-btn bcc-btn-outline" onclick="resetSkData()" style="margin-left:auto;color:#e74c3c;border-color:#e74c3c;">🗑️ Clear All Data</button>
+  </div>
+
+  <div class="bcc-ad-slot" id="tool_middle" data-ad-slot="tool_middle"></div>
+
+<div class="bcc-article-tail" style="margin-top:48px;">
+    <div class="bcc-tail-related">
+      <h3>Related Articles</h3>
+      <div class="bcc-tail-card">
+        <a href="../blog/measure-body-fat-skin-calipers.html" class="bcc-tail-card-title">How to Measure Body Fat at Home</a>
+        <p class="bcc-tail-card-desc">Complete guide to skinfold calipers and the Jackson-Pollock protocol.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/7-site-skinfold-protocol.html" class="bcc-tail-card-title">The 7-Site Skinfold Protocol</a>
+        <p class="bcc-tail-card-desc">Step-by-step self-measurement guide for all seven sites.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/track-lean-body-mass.html" class="bcc-tail-card-title">Track Lean Body Mass Without the Scale</a>
+        <p class="bcc-tail-card-desc">Why skinfold trends are more reliable than scale weight.</p>
+      </div>
+    </div>
+    <div class="bcc-tail-tools">
+      <h3>Recommended Tools</h3>
+      <div class="bcc-tail-card">
+        <a href="body-fat-estimator.html" class="bcc-tail-card-title">📏 Body Fat Estimator</a>
+        <p class="bcc-tail-card-desc">Convert your skinfolds to body fat percentage instantly.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="lean-mass-calculator.html" class="bcc-tail-card-title">💪 Lean Body Mass Calculator</a>
+        <p class="bcc-tail-card-desc">See your lean mass from skinfold-derived body fat.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="recomposition-planner.html" class="bcc-tail-card-title">📊 Recomposition Planner</a>
+        <p class="bcc-tail-card-desc">Set goals based on your skinfold trends.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bcc-ad-slot" id="tool_bottom" data-ad-slot="tool_bottom"></div>
+
+<footer class="bcc-footer">
+  <div class="bcc-container bcc-footer-grid">
+    <div><h4>Tools</h4><ul><li><a href="body-fat-estimator.html">Body Fat Estimator</a></li><li><a href="bmi-analyzer.html">BMI vs Body Fat</a></li><li><a href="lean-mass-calculator.html">Lean Body Mass</a></li><li><a href="skinfold-tracker.html">Skinfold Tracker</a></li><li><a href="bia-guide.html">BIA Guide</a></li><li><a href="recomposition-planner.html">Recomposition Planner</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="../blog/index.html">Blog</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../disclaimer.html">Disclaimer</a></li><li><a href="../disclosure.html">Disclosure</a></li></ul></div>
+    <div><h4>BodyCompCheck</h4><p style="font-size:0.85rem;opacity:0.7;line-height:1.6;">Free tools and evidence-based articles to help you understand your body composition numbers.</p></div>
+  </div>
+  <div class="bcc-container bcc-footer-bottom"><p>&copy; 2026 BodyCompCheck. All rights reserved.</p></div>
+</footer>
+
+<script src="../ads-loader.js"></script>
+<script>
+(function() {
+  'use strict';
+  var STORAGE_KEY = 'bcc-skinfold-entries';
+
+  function init() {
+    document.getElementById('sk-date').valueAsDate = new Date();
+    renderEntries();
+  }
+
+  function addEntry() {
+    var entry = {
+      date: document.getElementById('sk-date').value,
+      protocol: document.getElementById('sk-protocol').value,
+      sex: document.getElementById('sk-sex').value,
+      age: parseFloat(document.getElementById('sk-age').value) || 30,
+      chest: parseFloat(document.getElementById('sk-chest').value) || 0,
+      midax: parseFloat(document.getElementById('sk-midax').value) || 0,
+      supra: parseFloat(document.getElementById('sk-supra').value) || 0,
+      abd: parseFloat(document.getElementById('sk-abd').value) || 0,
+      thigh: parseFloat(document.getElementById('sk-thigh').value) || 0,
+      tri: parseFloat(document.getElementById('sk-tri').value) || 0,
+      sub: parseFloat(document.getElementById('sk-sub').value) || 0,
+      id: Date.now()
+    };
+    if (!entry.date) { alert('Please select a date'); return; }
+    var entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    entries.push(entry);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    renderEntries();
+    clearForm();
+  }
+
+  function clearForm() {
+    document.getElementById('sk-chest').value = '';
+    document.getElementById('sk-midax').value = '';
+    document.getElementById('sk-supra').value = '';
+    document.getElementById('sk-abd').value = '';
+    document.getElementById('sk-thigh').value = '';
+    document.getElementById('sk-tri').value = '';
+    document.getElementById('sk-sub').value = '';
+  }
+
+  function calcBF(entry) {
+    var sum = entry.chest + entry.supra + entry.abd + entry.thigh + entry.tri;
+    if (entry.protocol === '7') sum += entry.midax + entry.sub;
+    var density;
+    if (entry.sex === 'male') {
+      if (entry.protocol === '7') density = 1.112 - 0.00043499 * sum + 0.00000055 * sum * sum - 0.00028826 * entry.age;
+      else density = 1.10938 - 0.0008267 * sum + 0.0000016 * sum * sum - 0.0002574 * entry.age;
+    } else {
+      if (entry.protocol === '7') density = 1.097 - 0.00046971 * sum + 0.00000056 * sum * sum - 0.00012828 * entry.age;
+      else density = 1.0994921 - 0.0009929 * sum + 0.0000023 * sum * sum - 0.0001392 * entry.age;
+    }
+    return (495 / density) - 450;
+  }
+
+  function renderEntries() {
+    var entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    var list = document.getElementById('sk-entries-list');
+    if (entries.length === 0) {
+      list.innerHTML = '<p style="color:var(--bcc-text-light);font-style:italic;">No entries yet. Add your first skinfold measurement above.</p>';
+      return;
+    }
+    var html = '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;"><thead><tr><th style="text-align:left;padding:6px;border-bottom:1px solid var(--bcc-border);">Date</th><th style="text-align:right;padding:6px;border-bottom:1px solid var(--bcc-border);">Sum</th><th style="text-align:right;padding:6px;border-bottom:1px solid var(--bcc-border);">BF%</th><th style="text-align:center;padding:6px;border-bottom:1px solid var(--bcc-border);">Del</th></tr></thead><tbody>';
+    entries.slice().reverse().forEach(function(e) {
+      var sum = e.chest + e.supra + e.abd + e.thigh + e.tri + (e.protocol === '7' ? e.midax + e.sub : 0);
+      var bf = calcBF(e);
+      html += '<tr><td style="padding:6px;border-bottom:1px solid var(--bcc-border);">' + e.date + '</td><td style="padding:6px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + sum.toFixed(1) + 'mm</td><td style="padding:6px;text-align:right;border-bottom:1px solid var(--bcc-border);"><strong>' + bf.toFixed(1) + '%</strong></td><td style="padding:6px;text-align:center;border-bottom:1px solid var(--bcc-border);"><button onclick="deleteEntry(' + e.id + ')" style="background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1rem;">×</button></td></tr>';
+    });
+    html += '</tbody></table>';
+    list.innerHTML = html;
+    drawCharts(entries);
+  }
+
+  function deleteEntry(id) {
+    var entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    entries = entries.filter(function(e) { return e.id !== id; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    renderEntries();
+  }
+
+  function drawCharts(entries) {
+    if (entries.length < 1) return;
+    // Sort by date
+    entries.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+    // Sum chart
+    var canvas1 = document.getElementById('sk-sum-chart');
+    var ctx1 = canvas1.getContext('2d');
+    var w1 = canvas1.width, h1 = canvas1.height;
+    ctx1.clearRect(0, 0, w1, h1);
+    var sums = entries.map(function(e) {
+      return e.chest + e.supra + e.abd + e.thigh + e.tri + (e.protocol === '7' ? e.midax + e.sub : 0);
+    });
+    drawLineChart(ctx1, w1, h1, sums, '#2D6A4F', 'mm');
+    // BF chart
+    var canvas2 = document.getElementById('sk-bf-chart');
+    var ctx2 = canvas2.getContext('2d');
+    var w2 = canvas2.width, h2 = canvas2.height;
+    ctx2.clearRect(0, 0, w2, h2);
+    var bfs = entries.map(function(e) { return calcBF(e); });
+    drawLineChart(ctx2, w2, h2, bfs, '#e74c3c', '%');
+    // Site breakdown for latest
+    var latest = entries[entries.length - 1];
+    var canvas3 = document.getElementById('sk-site-chart');
+    var ctx3 = canvas3.getContext('2d');
+    var w3 = canvas3.width, h3 = canvas3.height;
+    ctx3.clearRect(0, 0, w3, h3);
+    var sites = [
+      {label:'Chest',val:latest.chest,color:'#3498db'},
+      {label:'Midax',val:latest.midax,color:'#9b59b6'},
+      {label:'Supra',val:latest.supra,color:'#e74c3c'},
+      {label:'Abd',val:latest.abd,color:'#f39c12'},
+      {label:'Thigh',val:latest.thigh,color:'#2ecc71'},
+      {label:'Tri',val:latest.tri,color:'#1abc9c'},
+      {label:'Sub',val:latest.sub,color:'#95a5a6'}
+    ].filter(function(s) { return s.val > 0; });
+    var maxVal = Math.max.apply(null, sites.map(function(s) { return s.val; })) * 1.2;
+    var barW = (w3 - 60) / sites.length;
+    sites.forEach(function(s, i) {
+      var bh = (s.val / maxVal) * (h3 - 60);
+      ctx3.fillStyle = s.color;
+      ctx3.fillRect(40 + i * barW, h3 - 40 - bh, barW - 4, bh);
+      ctx3.fillStyle = '#333';
+      ctx3.font = '11px sans-serif';
+      ctx3.fillText(s.label, 40 + i * barW + 2, h3 - 25);
+      ctx3.fillText(s.val.toFixed(1), 40 + i * barW + 2, h3 - 40 - bh - 5);
+    });
+  }
+
+  function drawLineChart(ctx, w, h, data, color, unit) {
+    var pad = 30;
+    var chartW = w - pad * 2;
+    var chartH = h - pad * 2;
+    var min = Math.min.apply(null, data) * 0.9;
+    var max = Math.max.apply(null, data) * 1.1;
+    ctx.strokeStyle = '#ccc'; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+    ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+    data.forEach(function(d, i) {
+      var x = pad + (i / (data.length - 1)) * chartW;
+      var y = h - pad - ((d - min) / (max - min)) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.fillStyle = color;
+    data.forEach(function(d, i) {
+      var x = pad + (i / (data.length - 1)) * chartW;
+      var y = h - pad - ((d - min) / (max - min)) * chartH;
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.fillStyle = '#666'; ctx.font = '11px sans-serif';
+    ctx.fillText(min.toFixed(1) + unit, 5, h - pad);
+    ctx.fillText(max.toFixed(1) + unit, 5, pad + 10);
+  }
+
+  function exportSkData() {
+    var entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (entries.length === 0) { alert('No data to export'); return; }
+    var text = 'BodyCompCheck — Skinfold Measurement Log\n';
+    text += 'Exported: ' + new Date().toLocaleString() + '\n\n';
+    text += 'Date,Protocol,Sex,Age,Chest,Midax,Suprailiac,Abdomen,Thigh,Triceps,Subscapular,Sum(mm),BF%\n';
+    entries.forEach(function(e) {
+      var sum = e.chest + e.supra + e.abd + e.thigh + e.tri + (e.protocol === '7' ? e.midax + e.sub : 0);
+      var bf = calcBF(e);
+      text += [e.date, e.protocol, e.sex, e.age, e.chest, e.midax, e.supra, e.abd, e.thigh, e.tri, e.sub, sum.toFixed(1), bf.toFixed(1)].join(',') + '\n';
+    });
+    text += '\nDisclaimer: Self-measurement error ±8%. Use trends, not absolutes.\n';
+    var blob = new Blob([text], {type: 'text/csv'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'bodycompcheck-skinfold-log.csv'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  function resetSkData() {
+    if (!confirm('Delete ALL skinfold data? This cannot be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    renderEntries();
+  }
+
+  init();
+  window.addEntry = addEntry;
+  window.clearForm = clearForm;
+  window.deleteEntry = deleteEntry;
+  window.exportSkData = exportSkData;
+  window.resetSkData = resetSkData;
+})();
+</script>
+</body>
+</html>
