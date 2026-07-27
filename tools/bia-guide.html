@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bioelectrical Impedance Guide — BodyCompCheck</title>
+<meta name="description" content="Understand how BIA works, what affects accuracy, and how to get the most consistent readings. Hydration, electrode placement, consumer vs professional devices.">
+<link rel="canonical" href="https://bodycompcheck.com/tools/bia-guide.html">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<meta property="og:title" content="Bioelectrical Impedance Guide — BodyCompCheck">
+<meta property="og:description" content="Understand BIA accuracy, hydration effects, and how to get consistent readings.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bodycompcheck.com/tools/bia-guide.html">
+<meta property="og:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bioelectrical Impedance Guide">
+<meta name="twitter:description" content="Understand BIA accuracy, hydration effects, and how to get consistent readings.">
+<meta name="twitter:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Bioelectrical Impedance Guide",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Understand how BIA works, what affects accuracy, and how to get the most consistent readings.",
+  "url": "https://bodycompcheck.com/tools/bia-guide.html",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Clarke",
+    "url": "https://bodycompcheck.com/about.html"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="bcc-nav">
+  <div class="bcc-container bcc-nav-inner">
+    <a href="../index.html" class="bcc-logo">BodyComp<span>Check</span></a>
+    <button class="bcc-nav-toggle" onclick="document.querySelector('.bcc-nav-links').classList.toggle('active')">&#9776;</button>
+    <ul class="bcc-nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Tools</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="bcc-ad-slot" id="tool_top" data-ad-slot="tool_top"></div>
+
+<div class="bcc-tool-layout-d">
+  <h1>⚡ Bioelectrical Impedance Guide</h1>
+  <p class="tool-subtitle">BIA is hydration-dependent. Learn what affects your reading and how to control it. Your data stays in your browser.</p>
+
+  <div class="bcc-tool-card-minimal">
+    <h3>BIA Simulator</h3>
+    <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">See how hydration changes affect your BIA reading. This is a simulation, not a measurement.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+        <select id="bia-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Age</label>
+        <input type="number" id="bia-age" value="30" min="18" max="80" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Weight (lbs)</label>
+        <input type="number" id="bia-weight" value="180" min="80" max="500" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Height (inches)</label>
+        <input type="number" id="bia-height" value="70" min="48" max="96" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Hydration Level (%)</label>
+        <input type="range" id="bia-hydration" min="50" max="70" value="60" style="width:100%;" oninput="document.getElementById('hydration-val').textContent = this.value + '%'">
+        <div style="text-align:center;font-size:0.85rem;color:var(--bcc-text-light);margin-top:4px;" id="hydration-val">60%</div>
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Device Type</label>
+        <select id="bia-device" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="consumer">Consumer Scale (Foot Only)</option>
+          <option value="professional">Professional 8-Electrode</option>
+        </select>
+      </div>
+    </div>
+    <button class="bcc-btn bcc-btn-primary" onclick="simulateBIA()" style="width:100%;">Simulate Reading</button>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="how-it-works">
+  <h3>How It Works</h3>
+  <p style="color:var(--bcc-text-light);font-size:0.95rem;margin-bottom:16px;line-height:1.7;">
+    This simulator demonstrates how <strong>bioelectrical impedance analysis (BIA)</strong> estimates body composition by sending a harmless electrical current through your body. Because water conducts electricity and fat does not, the device measures impedance (resistance) to estimate total body water, then derives lean mass and body fat. The simulation applies two key modifiers: <strong>hydration level</strong> (more water = lower impedance = lower BF% reading) and <strong>device type</strong> (consumer foot-only scales have higher error than professional 8-electrode units). The result is an educational estimate, not a medical measurement. Use the consistency checklist to understand why your real-world BIA readings fluctuate day-to-day.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.9rem;color:var(--bcc-text-light);">
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Consumer Scale</strong><br>
+      Error: ±5-8%<br>
+      Foot-only electrodes
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Professional 8-Electrode</strong><br>
+      Error: ±2-3%<br>
+      Hand + foot electrodes
+    </div>
+  </div>
+  <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:16px;">
+    <strong>Tip:</strong> A 2% change in total body water can swing BIA readings by 3-5%. Always measure under consistent conditions — same time, same hydration, same menstrual phase.
+  </p>
+</div>
+
+<div class="bcc-tool-card-minimal" id="bia-results" style="display:none;">
+    <h3>Simulated Results</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;">
+      <div style="text-align:center;padding:24px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:2.5rem;font-weight:700;color:var(--bcc-primary);font-family:var(--bcc-font-heading);" id="res-bia-bf">--</div>
+        <div style="font-size:0.9rem;color:var(--bcc-text-light);margin-top:4px;">Simulated Body Fat %</div>
+      </div>
+      <div style="text-align:center;padding:24px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:2.5rem;font-weight:700;color:var(--bcc-secondary);font-family:var(--bcc-font-heading);" id="res-bia-lean">--</div>
+        <div style="font-size:0.9rem;color:var(--bcc-text-light);margin-top:4px;">Simulated Lean Mass %</div>
+      </div>
+    </div>
+    <div id="bia-variance" style="margin:16px 0;padding:16px;border-radius:var(--bcc-radius-sm);"></div>
+    <canvas id="bia-chart" width="600" height="250" style="width:100%;max-width:600px;margin:24px auto;display:block;"></canvas>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+      <button class="bcc-btn bcc-btn-secondary" onclick="saveBIA()">💾 Save</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="exportBIA()">📄 Export</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="resetBIA()" style="margin-left:auto;">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal">
+    <h3>📋 Consistency Checklist</h3>
+    <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">Print this and put it on your bathroom mirror. Follow it every time you measure.</p>
+    <div id="checklist" style="background:var(--bcc-light);border-radius:var(--bcc-radius);padding:20px;">
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bcc-border);cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>Measure at the same time every day (ideally morning, after waking)</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bcc-border);cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>Void bladder completely before measuring</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bcc-border);cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>No food for at least 4 hours before</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bcc-border);cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>No exercise for 12 hours before</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bcc-border);cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>No alcohol for 24 hours before</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bcc-border);cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>Dry feet, no lotion</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer;">
+        <input type="checkbox" style="width:20px;height:20px;">
+        <span>Same phase of menstrual cycle (for women)</span>
+      </label>
+    </div>
+    <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:12px;">Checklist progress is saved automatically in your browser.</p>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="bia-history-panel">
+    <h3>📊 Saved Simulations</h3>
+    <div id="bia-history-list" style="max-height:300px;overflow-y:auto;">
+      <p style="color:var(--bcc-text-light);font-style:italic;">No saved simulations yet.</p>
+    </div>
+  </div>
+
+  <div class="bcc-ad-slot" id="tool_middle" data-ad-slot="tool_middle"></div>
+
+<div class="bcc-article-tail" style="margin-top:48px;">
+    <div class="bcc-tail-related">
+      <h3>Related Articles</h3>
+      <div class="bcc-tail-card">
+        <a href="../blog/morning-routine-bia-readings.html" class="bcc-tail-card-title">The Perfect Morning Routine for BIA</a>
+        <p class="bcc-tail-card-desc">A repeatable protocol that reduces day-to-day variance from 1.5% to 0.3%.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/consumer-bia-vs-professional.html" class="bcc-tail-card-title">Consumer BIA vs. Professional</a>
+        <p class="bcc-tail-card-desc">The real accuracy gap between $79 scales and $8,000 machines.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/hydration-strategies-body-composition.html" class="bcc-tail-card-title">Hydration Strategies for Testing</a>
+        <p class="bcc-tail-card-desc">How a glass of water can swing your reading by 3-5%.</p>
+      </div>
+    </div>
+    <div class="bcc-tail-tools">
+      <h3>Recommended Tools</h3>
+      <div class="bcc-tail-card">
+        <a href="body-fat-estimator.html" class="bcc-tail-card-title">📏 Body Fat Estimator</a>
+        <p class="bcc-tail-card-desc">Cross-check your BIA reading with other methods.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="bmi-analyzer.html" class="bcc-tail-card-title">⚖️ BMI vs Body Fat</a>
+        <p class="bcc-tail-card-desc">See if your BIA reading aligns with other metrics.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="skinfold-tracker.html" class="bcc-tail-card-title">📝 Skinfold Tracker</a>
+        <p class="bcc-tail-card-desc">A hydration-independent alternative to BIA.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bcc-ad-slot" id="tool_bottom" data-ad-slot="tool_bottom"></div>
+
+<footer class="bcc-footer">
+  <div class="bcc-container bcc-footer-grid">
+    <div><h4>Tools</h4><ul><li><a href="body-fat-estimator.html">Body Fat Estimator</a></li><li><a href="bmi-analyzer.html">BMI vs Body Fat</a></li><li><a href="lean-mass-calculator.html">Lean Body Mass</a></li><li><a href="skinfold-tracker.html">Skinfold Tracker</a></li><li><a href="bia-guide.html">BIA Guide</a></li><li><a href="recomposition-planner.html">Recomposition Planner</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="../blog/index.html">Blog</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../disclaimer.html">Disclaimer</a></li><li><a href="../disclosure.html">Disclosure</a></li></ul></div>
+    <div><h4>BodyCompCheck</h4><p style="font-size:0.85rem;opacity:0.7;line-height:1.6;">Free tools and evidence-based articles to help you understand your body composition numbers.</p></div>
+  </div>
+  <div class="bcc-container bcc-footer-bottom"><p>&copy; 2026 BodyCompCheck. All rights reserved.</p></div>
+</footer>
+
+<script src="../ads-loader.js"></script>
+<script>
+(function() {
+  'use strict';
+  var current = null;
+
+  function simulateBIA() {
+    var sex = document.getElementById('bia-sex').value;
+    var age = parseFloat(document.getElementById('bia-age').value) || 30;
+    var weight = parseFloat(document.getElementById('bia-weight').value) || 180;
+    var height = parseFloat(document.getElementById('bia-height').value) || 70;
+    var hydration = parseFloat(document.getElementById('bia-hydration').value) || 60;
+    var device = document.getElementById('bia-device').value;
+    // Simplified simulation: base BF estimate, then adjust by hydration and device
+    var hM = height * 0.0254;
+    var wKg = weight * 0.453592;
+    var bmi = wKg / (hM * hM);
+    var baseBF = sex === 'male' ? (bmi * 1.2 + 0.23 * age - 16.2) : (bmi * 1.2 + 0.23 * age - 5.4);
+    baseBF = Math.max(5, Math.min(50, baseBF));
+    // Hydration effect: higher hydration = lower BF reading (water conducts)
+    var hydrationEffect = (hydration - 60) * -0.3; // per % away from 60
+    var deviceError = device === 'consumer' ? (Math.random() * 4 - 2) : (Math.random() * 2 - 1);
+    var finalBF = baseBF + hydrationEffect + deviceError;
+    finalBF = Math.max(2, Math.min(60, finalBF));
+    var variance = device === 'consumer' ? '±5-8%' : '±2-3%';
+    var hydrationNote = hydration > 62 ? 'Overhydrated — reading may be artificially LOW.' : hydration < 58 ? 'Dehydrated — reading may be artificially HIGH.' : 'Hydration level optimal for BIA.';
+    document.getElementById('res-bia-bf').textContent = finalBF.toFixed(1) + '%';
+    document.getElementById('res-bia-lean').textContent = (100 - finalBF).toFixed(1) + '%';
+    var alertDiv = document.getElementById('bia-variance');
+    alertDiv.innerHTML = '<p style="margin:0;font-size:0.9rem;"><strong>Device Error:</strong> ' + variance + '</p><p style="margin:8px 0 0;font-size:0.9rem;"><strong>Hydration:</strong> ' + hydrationNote + '</p>';
+    alertDiv.style.background = hydration > 62 || hydration < 58 ? '#fff3cd' : '#d4edda';
+    document.getElementById('bia-results').style.display = 'block';
+    current = { bf: finalBF, lean: 100 - finalBF, hydration: hydration, device: device, sex: sex, age: age, weight: weight, height: height, date: new Date().toISOString() };
+    drawBIAChart(hydration, finalBF);
+    document.getElementById('bia-results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function drawBIAChart(hydration, bf) {
+    var canvas = document.getElementById('bia-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    // Simulate curve: BF vs Hydration
+    var pad = 40;
+    var chartW = w - pad * 2;
+    var chartH = h - pad * 2;
+    // Draw axes
+    ctx.strokeStyle = '#ccc'; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+    // Draw curve
+    ctx.strokeStyle = '#3498db'; ctx.lineWidth = 2; ctx.beginPath();
+    for (var hyd = 50; hyd <= 70; hyd += 0.5) {
+      var effect = (hyd - 60) * -0.3;
+      var yBF = 20 + effect; // simplified
+      var x = pad + ((hyd - 50) / 20) * chartW;
+      var y = h - pad - ((yBF - 10) / 30) * chartH;
+      if (hyd === 50) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    // Draw user point
+    var ux = pad + ((hydration - 50) / 20) * chartW;
+    var uy = h - pad - ((bf - 10) / 30) * chartH;
+    ctx.fillStyle = '#e74c3c'; ctx.beginPath(); ctx.arc(ux, uy, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e74c3c'; ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('You (' + hydration + '%, ' + bf.toFixed(1) + '%)', ux + 12, uy - 8);
+    // Labels
+    ctx.fillStyle = '#666'; ctx.font = '11px sans-serif';
+    ctx.fillText('50%', pad, h - pad + 15); ctx.fillText('70%', w - pad - 20, h - pad + 15);
+    ctx.fillText('10% BF', 5, h - pad); ctx.fillText('40% BF', 5, pad + 10);
+    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+    ctx.fillText('Hydration %', w / 2 - 30, h - 10);
+    ctx.save(); ctx.translate(15, h / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('Body Fat %', -20, 0); ctx.restore();
+  }
+
+  function saveBIA() {
+    if (!current) return;
+    var history = JSON.parse(localStorage.getItem('bcc-bia-history') || '[]');
+    history.push(current);
+    localStorage.setItem('bcc-bia-history', JSON.stringify(history));
+    renderBIAHistory();
+  }
+
+  function renderBIAHistory() {
+    var history = JSON.parse(localStorage.getItem('bcc-bia-history') || '[]');
+    var list = document.getElementById('bia-history-list');
+    if (history.length === 0) {
+      list.innerHTML = '<p style="color:var(--bcc-text-light);font-style:italic;">No saved simulations yet.</p>';
+      return;
+    }
+    var html = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Date</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">BF%</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Hydration</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Device</th></tr></thead><tbody>';
+    history.slice().reverse().forEach(function(h) {
+      var d = new Date(h.date).toLocaleDateString();
+      html += '<tr><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + d + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);"><strong>' + h.bf.toFixed(1) + '%</strong></td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.hydration + '%</td><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + h.device + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    list.innerHTML = html;
+  }
+
+  function exportBIA() {
+    if (!current) return;
+    var text = 'BodyCompCheck — BIA Simulation Report\n';
+    text += 'Generated: ' + new Date().toLocaleString() + '\n\n';
+    text += 'Simulated Body Fat: ' + current.bf.toFixed(1) + '%\n';
+    text += 'Simulated Lean Mass: ' + current.lean.toFixed(1) + '%\n';
+    text += 'Hydration Level: ' + current.hydration + '%\n';
+    text += 'Device: ' + current.device + '\n';
+    text += 'Sex: ' + current.sex + ', Age: ' + current.age + '\n';
+    text += 'Weight: ' + current.weight + ' lbs, Height: ' + current.height + ' in\n\n';
+    text += 'NOTE: This is a simulation for educational purposes only.\n';
+    text += 'Actual BIA readings depend on many factors including device algorithm.\n';
+    var blob = new Blob([text], {type: 'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'bodycompcheck-bia-simulation.txt'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  function resetBIA() {
+    document.getElementById('bia-results').style.display = 'none';
+    current = null;
+    document.getElementById('bia-age').value = '30';
+    document.getElementById('bia-weight').value = '180';
+    document.getElementById('bia-height').value = '70';
+    document.getElementById('bia-hydration').value = '60';
+    document.getElementById('hydration-val').textContent = '60%';
+  }
+
+  // Checklist persistence
+  document.querySelectorAll('#checklist input').forEach(function(cb, i) {
+    cb.checked = localStorage.getItem('bcc-checklist-' + i) === 'true';
+    cb.addEventListener('change', function() {
+      localStorage.setItem('bcc-checklist-' + i, this.checked);
+    });
+  });
+
+  renderBIAHistory();
+  window.simulateBIA = simulateBIA;
+  window.saveBIA = saveBIA;
+  window.exportBIA = exportBIA;
+  window.resetBIA = resetBIA;
+})();
+</script>
+</body>
+</html>
