@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Fat Percentage Estimator — BodyCompCheck</title>
+<meta name="description" content="Estimate your body fat percentage using the Navy method, YMCA method, or 3-site/7-site skinfold Jackson-Pollock equations. Free. Private. No data leaves your browser.">
+<link rel="canonical" href="https://bodycompcheck.com/tools/body-fat-estimator.html">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<meta property="og:title" content="Body Fat Percentage Estimator — BodyCompCheck">
+<meta property="og:description" content="Estimate your body fat percentage using Navy method, YMCA method, or skinfold calipers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bodycompcheck.com/tools/body-fat-estimator.html">
+<meta property="og:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Body Fat Percentage Estimator">
+<meta name="twitter:description" content="Estimate your body fat percentage using Navy method, YMCA method, or skinfold calipers.">
+<meta name="twitter:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Body Fat Percentage Estimator",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Estimate body fat percentage using Navy method, YMCA method, or 3-site/7-site skinfold Jackson-Pollock equations.",
+  "url": "https://bodycompcheck.com/tools/body-fat-estimator.html",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Clarke",
+    "url": "https://bodycompcheck.com/about.html"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="bcc-nav">
+  <div class="bcc-container bcc-nav-inner">
+    <a href="../index.html" class="bcc-logo">BodyComp<span>Check</span></a>
+    <button class="bcc-nav-toggle" onclick="document.querySelector('.bcc-nav-links').classList.toggle('active')">&#9776;</button>
+    <ul class="bcc-nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Tools</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="bcc-ad-slot" id="tool_top" data-ad-slot="tool_top"></div>
+
+<div class="bcc-tool-layout-d">
+  <h1>📏 Body Fat Percentage Estimator</h1>
+  <p class="tool-subtitle">Three methods. One number. Your choice. All calculations run in your browser — we never see your data.</p>
+
+  <!-- Tool Top Ad -->
+  <div class="bcc-tool-card-minimal">
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+      <button class="bcc-btn bcc-btn-primary" id="btn-navy" onclick="switchMethod('navy')" style="flex:1;min-width:120px;">Navy Method</button>
+      <button class="bcc-btn bcc-btn-outline" id="btn-ymca" onclick="switchMethod('ymca')" style="flex:1;min-width:120px;">YMCA Method</button>
+      <button class="bcc-btn bcc-btn-outline" id="btn-skinfold" onclick="switchMethod('skinfold')" style="flex:1;min-width:120px;">Skinfold</button>
+    </div>
+
+    <!-- Navy Method -->
+    <div id="panel-navy">
+      <h3>Navy Method (Circumference)</h3>
+      <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">Uses neck and waist measurements. Fast, no equipment beyond a tape measure.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+          <select id="navy-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Age (years)</label>
+          <input type="number" id="navy-age" value="30" min="18" max="80" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Height (inches)</label>
+          <input type="number" id="navy-height" value="70" min="48" max="96" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Neck (inches)</label>
+          <input type="number" id="navy-neck" value="15" min="10" max="30" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Waist (inches)</label>
+          <input type="number" id="navy-waist" value="34" min="20" max="80" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div id="navy-hips-wrap" style="display:none;">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Hips (inches)</label>
+          <input type="number" id="navy-hips" value="38" min="20" max="80" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+      </div>
+      <button class="bcc-btn bcc-btn-primary" onclick="calcNavy()" style="width:100%;">Calculate Body Fat</button>
+    </div>
+
+    <!-- YMCA Method -->
+    <div id="panel-ymca" style="display:none;">
+      <h3>YMCA Method</h3>
+      <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">Simplified formula using weight and waist. Less accurate but very fast.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+          <select id="ymca-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Weight (lbs)</label>
+          <input type="number" id="ymca-weight" value="180" min="80" max="500" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Waist (inches)</label>
+          <input type="number" id="ymca-waist" value="34" min="20" max="80" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+      </div>
+      <button class="bcc-btn bcc-btn-primary" onclick="calcYMCA()" style="width:100%;">Calculate Body Fat</button>
+    </div>
+
+    <!-- Skinfold Method -->
+    <div id="panel-skinfold" style="display:none;">
+      <h3>Skinfold Method (Jackson-Pollock)</h3>
+      <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">3-site or 7-site protocol. Most accurate home method when done correctly.</p>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Protocol</label>
+        <select id="sk-fold-protocol" onchange="updateSkinfoldFields()" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="3">3-Site (Men: Chest/Abdomen/Thigh | Women: Triceps/Suprailiac/Thigh)</option>
+          <option value="7">7-Site (Chest/Midaxillary/Suprailiac/Abdomen/Thigh/Triceps/Subscapular)</option>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+          <select id="sk-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Age (years)</label>
+          <input type="number" id="sk-age" value="30" min="18" max="80" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-chest-wrap">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Chest (mm)</label>
+          <input type="number" id="sk-chest" value="12" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-midax-wrap" style="display:none;">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Midaxillary (mm)</label>
+          <input type="number" id="sk-midax" value="10" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-supra-wrap">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Suprailiac (mm)</label>
+          <input type="number" id="sk-supra" value="16" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-abd-wrap">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Abdomen (mm)</label>
+          <input type="number" id="sk-abd" value="22" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-thigh-wrap">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Thigh (mm)</label>
+          <input type="number" id="sk-thigh" value="18" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-tri-wrap">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Triceps (mm)</label>
+          <input type="number" id="sk-tri" value="15" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+        <div class="sk-site" id="sk-sub-wrap" style="display:none;">
+          <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Subscapular (mm)</label>
+          <input type="number" id="sk-sub" value="14" min="1" max="80" step="0.5" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+        </div>
+      </div>
+      <button class="bcc-btn bcc-btn-primary" onclick="calcSkinfold()" style="width:100%;">Calculate Body Fat</button>
+    </div>
+  </div>
+
+  <!-- Results Panel -->
+  <div class="bcc-tool-card-minimal" id="how-it-works">
+  <h3>How It Works</h3>
+  <p style="color:var(--bcc-text-light);font-size:0.95rem;margin-bottom:16px;line-height:1.7;">
+    This estimator combines three validated methods to give you a range of body fat percentages. The <strong>Navy Method</strong> uses neck and waist circumference — fast, free, and requires only a tape measure. The <strong>YMCA Method</strong> simplifies further with just weight and waist. The <strong>Jackson-Pollock Skinfold</strong> method uses caliper measurements at 3 or 7 sites and is the most accurate home option when performed correctly. Each method has known error margins (shown in your results). We recommend using 2-3 methods and comparing the range rather than trusting any single number.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.9rem;color:var(--bcc-text-light);">
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Navy Method</strong><br>
+      Error: ±4-6%<br>
+      Needs: Tape measure
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">YMCA Method</strong><br>
+      Error: ±5-8%<br>
+      Needs: Scale + tape
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">3-Site Skinfold</strong><br>
+      Error: ±4-6%<br>
+      Needs: Calipers + skill
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">7-Site Skinfold</strong><br>
+      Error: ±3-5%<br>
+      Needs: Calipers + experience
+    </div>
+  </div>
+  <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:16px;">
+    <strong>Tip:</strong> Measure at the same time of day, under the same conditions. Hydration and meal timing can shift readings by 1-3%.
+  </p>
+</div>
+
+<div class="bcc-tool-card-minimal" id="results-panel" style="display:none;">
+    <h3>Your Results</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;">
+      <div style="text-align:center;padding:24px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:3rem;font-weight:700;color:var(--bcc-primary);font-family:var(--bcc-font-heading);" id="result-bf">--</div>
+        <div style="font-size:0.9rem;color:var(--bcc-text-light);margin-top:4px;">Body Fat %</div>
+      </div>
+      <div style="text-align:center;padding:24px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:3rem;font-weight:700;color:var(--bcc-secondary);font-family:var(--bcc-font-heading);" id="result-lean">--</div>
+        <div style="font-size:0.9rem;color:var(--bcc-text-light);margin-top:4px;">Lean Mass %</div>
+      </div>
+    </div>
+    <div style="margin:16px 0;padding:16px;background:var(--bcc-accent);border-radius:var(--bcc-radius-sm);border-left:4px solid var(--bcc-primary);">
+      <p style="margin:0;font-size:0.9rem;color:var(--bcc-dark);"><strong>Category:</strong> <span id="result-category">--</span></p>
+      <p style="margin:8px 0 0;font-size:0.85rem;color:var(--bcc-text-light);">Based on ACE standards. Error range: <span id="result-error">--</span></p>
+    </div>
+    <canvas id="bf-chart" width="600" height="200" style="width:100%;max-width:600px;margin:24px auto;display:block;"></canvas>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+      <button class="bcc-btn bcc-btn-secondary" onclick="saveResult()">💾 Save to History</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="exportResult()">📄 Export Report</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="resetAll()" style="margin-left:auto;">🔄 Reset</button>
+    </div>
+  </div>
+
+  <!-- History & Comparison -->
+  <div class="bcc-tool-card-minimal" id="history-panel">
+    <h3>📊 Saved Results</h3>
+    <p style="color:var(--bcc-text-light);font-size:0.9rem;margin-bottom:16px;">Compare your measurements over time. Data is stored locally in your browser.</p>
+    <div id="history-list" style="max-height:300px;overflow-y:auto;">
+      <p style="color:var(--bcc-text-light);font-style:italic;">No saved results yet. Calculate and save to start tracking.</p>
+    </div>
+    <canvas id="history-chart" width="600" height="250" style="width:100%;max-width:600px;margin:24px auto;display:none;"></canvas>
+  </div>
+
+  <!-- Tool Bottom Ad -->
+  <!-- Related Articles & Tools -->
+  <div class="bcc-ad-slot" id="tool_middle" data-ad-slot="tool_middle"></div>
+
+<div class="bcc-article-tail" style="margin-top:48px;">
+    <div class="bcc-tail-related">
+      <h3>Related Articles</h3>
+      <div class="bcc-tail-card">
+        <a href="../blog/measure-body-fat-skin-calipers.html" class="bcc-tail-card-title">How to Measure Body Fat at Home</a>
+        <p class="bcc-tail-card-desc">Complete guide to skinfold calipers and the Jackson-Pollock protocol.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/accuracy-hierarchy-body-composition.html" class="bcc-tail-card-title">The Accuracy Hierarchy</a>
+        <p class="bcc-tail-card-desc">Ranking every body composition method from gold standard to rough estimate.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/navy-method-vs-3-site-skinfold.html" class="bcc-tail-card-title">Navy Method vs. 3-Site Skinfold</a>
+        <p class="bcc-tail-card-desc">Battle of the estimators — which is right for you?</p>
+      </div>
+    </div>
+    <div class="bcc-tail-tools">
+      <h3>Recommended Tools</h3>
+      <div class="bcc-tail-card">
+        <a href="bmi-analyzer.html" class="bcc-tail-card-title">⚖️ BMI vs Body Fat Analyzer</a>
+        <p class="bcc-tail-card-desc">See how your BMI and body fat compare.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="lean-mass-calculator.html" class="bcc-tail-card-title">💪 Lean Body Mass Calculator</a>
+        <p class="bcc-tail-card-desc">Calculate lean mass from your results.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="skinfold-tracker.html" class="bcc-tail-card-title">📝 Skinfold Tracker</a>
+        <p class="bcc-tail-card-desc">Log your skinfold measurements over time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bcc-ad-slot" id="tool_bottom" data-ad-slot="tool_bottom"></div>
+
+<footer class="bcc-footer">
+  <div class="bcc-container bcc-footer-grid">
+    <div>
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="body-fat-estimator.html">Body Fat Estimator</a></li>
+        <li><a href="bmi-analyzer.html">BMI vs Body Fat</a></li>
+        <li><a href="lean-mass-calculator.html">Lean Body Mass</a></li>
+        <li><a href="skinfold-tracker.html">Skinfold Tracker</a></li>
+        <li><a href="bia-guide.html">BIA Guide</a></li>
+        <li><a href="recomposition-planner.html">Recomposition Planner</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../privacy.html">Privacy Policy</a></li>
+        <li><a href="../terms.html">Terms of Use</a></li>
+        <li><a href="../disclaimer.html">Disclaimer</a></li>
+        <li><a href="../disclosure.html">Affiliate Disclosure</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>BodyCompCheck</h4>
+      <p style="font-size:0.85rem;opacity:0.7;line-height:1.6;">Free tools and evidence-based articles to help you understand your body composition numbers.</p>
+    </div>
+  </div>
+  <div class="bcc-container bcc-footer-bottom">
+    <p>&copy; 2026 BodyCompCheck. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../ads-loader.js"></script>
+<script>
+(function() {
+  'use strict';
+  let currentMethod = 'navy';
+  let currentResult = null;
+
+  function switchMethod(m) {
+    currentMethod = m;
+    ['navy','ymca','skinfold'].forEach(function(x) {
+      document.getElementById('panel-' + x).style.display = (x === m) ? 'block' : 'none';
+      var btn = document.getElementById('btn-' + x);
+      if (x === m) { btn.classList.remove('bcc-btn-outline'); btn.classList.add('bcc-btn-primary'); }
+      else { btn.classList.remove('bcc-btn-primary'); btn.classList.add('bcc-btn-outline'); }
+    });
+  }
+
+  document.getElementById('navy-sex').addEventListener('change', function() {
+    document.getElementById('navy-hips-wrap').style.display = (this.value === 'female') ? 'block' : 'none';
+  });
+
+  function updateSkinfoldFields() {
+    var is7 = document.getElementById('sk-fold-protocol').value === '7';
+    document.getElementById('sk-midax-wrap').style.display = is7 ? 'block' : 'none';
+    document.getElementById('sk-sub-wrap').style.display = is7 ? 'block' : 'none';
+  }
+
+  function calcNavy() {
+    var sex = document.getElementById('navy-sex').value;
+    var age = parseFloat(document.getElementById('navy-age').value) || 30;
+    var height = parseFloat(document.getElementById('navy-height').value) || 70;
+    var neck = parseFloat(document.getElementById('navy-neck').value) || 15;
+    var waist = parseFloat(document.getElementById('navy-waist').value) || 34;
+    var hips = parseFloat(document.getElementById('navy-hips').value) || 38;
+    var bf;
+    if (sex === 'male') {
+      bf = 86.01 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+    } else {
+      bf = 163.205 * Math.log10(waist + hips - neck) - 97.684 * Math.log10(height) - 78.387;
+    }
+    bf = Math.max(2, Math.min(60, bf));
+    showResult(bf, 'Navy Method', '±4-6%');
+  }
+
+  function calcYMCA() {
+    var sex = document.getElementById('ymca-sex').value;
+    var weight = parseFloat(document.getElementById('ymca-weight').value) || 180;
+    var waist = parseFloat(document.getElementById('ymca-waist').value) || 34;
+    var bf;
+    if (sex === 'male') {
+      bf = -98.42 + 4.15 * waist - 0.082 * weight;
+    } else {
+      bf = -76.76 + 4.15 * waist - 0.082 * weight;
+    }
+    bf = Math.max(2, Math.min(60, bf));
+    showResult(bf, 'YMCA Method', '±5-8%');
+  }
+
+  function calcSkinfold() {
+    var sex = document.getElementById('sk-sex').value;
+    var age = parseFloat(document.getElementById('sk-age').value) || 30;
+    var is7 = document.getElementById('sk-fold-protocol').value === '7';
+    var sum = 0;
+    var sites = ['chest','supra','abd','thigh','tri'];
+    if (is7) sites = sites.concat(['midax','sub']);
+    sites.forEach(function(s) {
+      var el = document.getElementById('sk-' + s);
+      if (el && el.parentElement.style.display !== 'none') {
+        sum += parseFloat(el.value) || 0;
+      }
+    });
+    var density;
+    if (sex === 'male') {
+      if (is7) {
+        density = 1.112 - 0.00043499 * sum + 0.00000055 * sum * sum - 0.00028826 * age;
+      } else {
+        density = 1.10938 - 0.0008267 * sum + 0.0000016 * sum * sum - 0.0002574 * age;
+      }
+    } else {
+      if (is7) {
+        density = 1.097 - 0.00046971 * sum + 0.00000056 * sum * sum - 0.00012828 * age;
+      } else {
+        density = 1.0994921 - 0.0009929 * sum + 0.0000023 * sum * sum - 0.0001392 * age;
+      }
+    }
+    var bf = (495 / density) - 450;
+    bf = Math.max(2, Math.min(60, bf));
+    var err = is7 ? '±3-5%' : '±4-6%';
+    showResult(bf, 'Jackson-Pollock ' + (is7 ? '7' : '3') + '-Site', err);
+  }
+
+  function showResult(bf, method, error) {
+    currentResult = { bf: bf, method: method, error: error, date: new Date().toISOString() };
+    document.getElementById('result-bf').textContent = bf.toFixed(1) + '%';
+    document.getElementById('result-lean').textContent = (100 - bf).toFixed(1) + '%';
+    var cat = getCategory(bf);
+    document.getElementById('result-category').textContent = cat;
+    document.getElementById('result-error').textContent = error;
+    document.getElementById('results-panel').style.display = 'block';
+    drawChart(bf);
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function getCategory(bf) {
+    // Simplified ACE categories (male-centric for demo, adjust as needed)
+    if (bf < 6) return 'Essential Fat (Athletes)';
+    if (bf < 14) return 'Athletes';
+    if (bf < 18) return 'Fitness';
+    if (bf < 25) return 'Acceptable';
+    return 'Obese';
+  }
+
+  function drawChart(bf) {
+    var canvas = document.getElementById('bf-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    // Draw bars for categories
+    var cats = [
+      {label:'Essential',max:6,color:'#e74c3c'},
+      {label:'Athletes',max:14,color:'#3498db'},
+      {label:'Fitness',max:18,color:'#2ecc71'},
+      {label:'Acceptable',max:25,color:'#f39c12'},
+      {label:'Obese',max:40,color:'#e67e22'}
+    ];
+    var barH = 30, gap = 10, startY = 40;
+    var maxVal = 40;
+    cats.forEach(function(c, i) {
+      var y = startY + i * (barH + gap);
+      var bw = (c.max / maxVal) * (w - 120);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(100, y, bw, barH);
+      ctx.fillStyle = '#333';
+      ctx.font = '14px sans-serif';
+      ctx.fillText(c.label, 10, y + barH/2 + 5);
+      ctx.fillText(c.max + '%', 105 + bw + 5, y + barH/2 + 5);
+    });
+    // Draw marker
+    var markerX = 100 + (bf / maxVal) * (w - 120);
+    var markerY = startY + cats.length * (barH + gap) + 10;
+    ctx.beginPath();
+    ctx.moveTo(markerX, markerY);
+    ctx.lineTo(markerX - 8, markerY + 15);
+    ctx.lineTo(markerX + 8, markerY + 15);
+    ctx.closePath();
+    ctx.fillStyle = '#2D6A4F';
+    ctx.fill();
+    ctx.fillStyle = '#2D6A4F';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.fillText('You: ' + bf.toFixed(1) + '%', markerX - 30, markerY + 35);
+  }
+
+  function saveResult() {
+    if (!currentResult) return;
+    var history = JSON.parse(localStorage.getItem('bcc-bf-history') || '[]');
+    history.push(currentResult);
+    localStorage.setItem('bcc-bf-history', JSON.stringify(history));
+    renderHistory();
+  }
+
+  function renderHistory() {
+    var history = JSON.parse(localStorage.getItem('bcc-bf-history') || '[]');
+    var list = document.getElementById('history-list');
+    if (history.length === 0) {
+      list.innerHTML = '<p style="color:var(--bcc-text-light);font-style:italic;">No saved results yet. Calculate and save to start tracking.</p>';
+      document.getElementById('history-chart').style.display = 'none';
+      return;
+    }
+    var html = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Date</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Method</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">BF%</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Error</th></tr></thead><tbody>';
+    history.slice().reverse().forEach(function(h) {
+      var d = new Date(h.date).toLocaleDateString();
+      html += '<tr><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + d + '</td><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + h.method + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);"><strong>' + h.bf.toFixed(1) + '%</strong></td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);color:var(--bcc-text-light);">' + h.error + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    list.innerHTML = html;
+    document.getElementById('history-chart').style.display = 'block';
+    drawHistoryChart(history);
+  }
+
+  function drawHistoryChart(history) {
+    var canvas = document.getElementById('history-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    if (history.length < 2) return;
+    var pad = 40;
+    var chartW = w - pad * 2;
+    var chartH = h - pad * 2;
+    var bfs = history.map(function(h) { return h.bf; });
+    var min = Math.min.apply(null, bfs) - 2;
+    var max = Math.max.apply(null, bfs) + 2;
+    // Draw axes
+    ctx.strokeStyle = '#ccc';
+    ctx.beginPath();
+    ctx.moveTo(pad, pad);
+    ctx.lineTo(pad, h - pad);
+    ctx.lineTo(w - pad, h - pad);
+    ctx.stroke();
+    // Draw line
+    ctx.strokeStyle = '#2D6A4F';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    history.forEach(function(h, i) {
+      var x = pad + (i / (history.length - 1)) * chartW;
+      var y = h - pad - ((h.bf - min) / (max - min)) * chartH;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Draw points
+    ctx.fillStyle = '#2D6A4F';
+    history.forEach(function(h, i) {
+      var x = pad + (i / (history.length - 1)) * chartW;
+      var y = h - pad - ((h.bf - min) / (max - min)) * chartH;
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    // Labels
+    ctx.fillStyle = '#666';
+    ctx.font = '12px sans-serif';
+    ctx.fillText(min.toFixed(1) + '%', 5, h - pad);
+    ctx.fillText(max.toFixed(1) + '%', 5, pad + 10);
+  }
+
+  function exportResult() {
+    if (!currentResult) return;
+    var text = 'BodyCompCheck — Body Fat Percentage Estimator Report\n';
+    text += 'Generated: ' + new Date().toLocaleString() + '\n\n';
+    text += 'Method: ' + currentResult.method + '\n';
+    text += 'Body Fat: ' + currentResult.bf.toFixed(1) + '%\n';
+    text += 'Lean Mass: ' + (100 - currentResult.bf).toFixed(1) + '%\n';
+    text += 'Error Range: ' + currentResult.error + '\n';
+    text += 'Category: ' + getCategory(currentResult.bf) + '\n\n';
+    text += 'Disclaimer: This is an estimate, not a medical measurement.\n';
+    text += 'For accurate results, consult a qualified professional.\n';
+    var blob = new Blob([text], {type: 'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'bodycompcheck-bf-report.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function resetAll() {
+    document.getElementById('results-panel').style.display = 'none';
+    currentResult = null;
+    document.getElementById('navy-age').value = '30';
+    document.getElementById('navy-height').value = '70';
+    document.getElementById('navy-neck').value = '15';
+    document.getElementById('navy-waist').value = '34';
+    document.getElementById('navy-hips').value = '38';
+    document.getElementById('ymca-weight').value = '180';
+    document.getElementById('ymca-waist').value = '34';
+    document.getElementById('sk-age').value = '30';
+    document.getElementById('sk-chest').value = '12';
+    document.getElementById('sk-supra').value = '16';
+    document.getElementById('sk-abd').value = '22';
+    document.getElementById('sk-thigh').value = '18';
+    document.getElementById('sk-tri').value = '15';
+    document.getElementById('sk-midax').value = '10';
+    document.getElementById('sk-sub').value = '14';
+  }
+
+  // Init
+  switchMethod('navy');
+  renderHistory();
+  window.switchMethod = switchMethod;
+  window.updateSkinfoldFields = updateSkinfoldFields;
+  window.calcNavy = calcNavy;
+  window.calcYMCA = calcYMCA;
+  window.calcSkinfold = calcSkinfold;
+  window.saveResult = saveResult;
+  window.exportResult = exportResult;
+  window.resetAll = resetAll;
+})();
+</script>
+</body>
+</html>
