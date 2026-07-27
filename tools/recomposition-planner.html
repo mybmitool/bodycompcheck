@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Recomposition Planner — BodyCompCheck</title>
+<meta name="description" content="Plan your body recomposition with realistic timelines. Bulk rate, cut rate, maintenance calories, protein targets, and timeline to goal body fat percentage.">
+<link rel="canonical" href="https://bodycompcheck.com/tools/recomposition-planner.html">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<meta property="og:title" content="Body Recomposition Planner — BodyCompCheck">
+<meta property="og:description" content="Plan your body recomposition with realistic timelines for muscle gain and fat loss.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bodycompcheck.com/tools/recomposition-planner.html">
+<meta property="og:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Body Recomposition Planner">
+<meta name="twitter:description" content="Plan your body recomposition with realistic timelines.">
+<meta name="twitter:image" content="https://bodycompcheck.com/images/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Body Recomposition Planner",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Plan body recomposition with bulk/cut rates, maintenance calories, protein targets, and timeline to goal BF%.",
+  "url": "https://bodycompcheck.com/tools/recomposition-planner.html",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Clarke",
+    "url": "https://bodycompcheck.com/about.html"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="bcc-nav">
+  <div class="bcc-container bcc-nav-inner">
+    <a href="../index.html" class="bcc-logo">BodyComp<span>Check</span></a>
+    <button class="bcc-nav-toggle" onclick="document.querySelector('.bcc-nav-links').classList.toggle('active')">&#9776;</button>
+    <ul class="bcc-nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Tools</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="bcc-ad-slot" id="tool_top" data-ad-slot="tool_top"></div>
+
+<div class="bcc-tool-layout-d">
+  <h1>📊 Body Recomposition Planner</h1>
+  <p class="tool-subtitle">From where you are to where you want to be. Realistic timelines, real numbers. Your data stays in your browser.</p>
+
+  <div class="bcc-tool-card-minimal">
+    <h3>Your Current Stats</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Sex</label>
+        <select id="rec-sex" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Age</label>
+        <input type="number" id="rec-age" value="30" min="18" max="80" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Weight (lbs)</label>
+        <input type="number" id="rec-weight" value="180" min="80" max="500" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Current Body Fat %</label>
+        <input type="number" id="rec-current-bf" value="22" min="2" max="60" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Goal Body Fat %</label>
+        <input type="number" id="rec-goal-bf" value="15" min="2" max="60" step="0.1" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+      </div>
+      <div>
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:0.9rem;">Training Frequency (days/week)</label>
+        <select id="rec-training" style="width:100%;padding:10px;border:1px solid var(--bcc-border);border-radius:var(--bcc-radius-sm);font-size:1rem;">
+          <option value="2">2 days</option>
+          <option value="3">3 days</option>
+          <option value="4" selected>4 days</option>
+          <option value="5">5 days</option>
+          <option value="6">6 days</option>
+        </select>
+      </div>
+    </div>
+    <button class="bcc-btn bcc-btn-primary" onclick="calcRecomp()" style="width:100%;">Generate Plan</button>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="how-it-works">
+  <h3>How It Works</h3>
+  <p style="color:var(--bcc-text-light);font-size:0.95rem;margin-bottom:16px;line-height:1.7;">
+    This planner calculates your <strong>maintenance calories</strong> using the Mifflin-St Jeor equation adjusted for activity level, then selects a strategy based on the gap between your current and goal body fat percentage. If the gap is large (>8%), it recommends a cut phase first. If moderate (0-8%), it recommends simultaneous recomposition. If you are already lean, it recommends a lean bulk. The tool then projects monthly milestones using realistic rates: body fat loss of 0.3-0.75% per month for recomposition, or 0.5-1.0% per month for dedicated cuts. Protein is set at 1.8g per kg of body weight to support muscle retention and growth. Remember: recomposition works best for beginners, returning lifters, and those with higher body fat. Advanced athletes may need dedicated bulk/cut cycles.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:0.9rem;color:var(--bcc-text-light);">
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Cut Phase</strong><br>
+      BF gap > 8%<br>
+      -300 cal/day
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Recomposition</strong><br>
+      BF gap 0-8%<br>
+      Maintenance calories
+    </div>
+    <div style="background:var(--bcc-light);padding:16px;border-radius:var(--bcc-radius-sm);">
+      <strong style="color:var(--bcc-dark);">Lean Bulk</strong><br>
+      Already lean<br>
+      +200 cal/day
+    </div>
+  </div>
+  <p style="color:var(--bcc-text-light);font-size:0.85rem;margin-top:16px;">
+    <strong>Tip:</strong> Track your lean mass monthly with the <a href="lean-mass-calculator.html">Lean Body Mass Calculator</a>. If lean mass is rising while fat mass falls, recomposition is working even if the scale stays flat.
+  </p>
+</div>
+
+<div class="bcc-tool-card-minimal" id="rec-results" style="display:none;">
+    <h3>Your Recomposition Plan</h3>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0;">
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:1.8rem;font-weight:700;color:var(--bcc-primary);font-family:var(--bcc-font-heading);" id="res-weeks">--</div>
+        <div style="font-size:0.8rem;color:var(--bcc-text-light);margin-top:4px;">Estimated Weeks</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:1.8rem;font-weight:700;color:var(--bcc-secondary);font-family:var(--bcc-font-heading);" id="res-calories">--</div>
+        <div style="font-size:0.8rem;color:var(--bcc-text-light);margin-top:4px;">Daily Calories</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:1.8rem;font-weight:700;color:#3498db;font-family:var(--bcc-font-heading);" id="res-protein">--</div>
+        <div style="font-size:0.8rem;color:var(--bcc-text-light);margin-top:4px;">Protein (g/day)</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:var(--bcc-light);border-radius:var(--bcc-radius);">
+        <div style="font-size:1.8rem;font-weight:700;color:#e74c3c;font-family:var(--bcc-font-heading);" id="res-rate">--</div>
+        <div style="font-size:0.8rem;color:var(--bcc-text-light);margin-top:4px;">Target Rate</div>
+      </div>
+    </div>
+
+    <h4 style="margin:24px 0 12px;">Monthly Milestones</h4>
+    <div id="rec-milestones" style="margin:16px 0;"></div>
+
+    <canvas id="rec-chart" width="600" height="250" style="width:100%;max-width:600px;margin:24px auto;display:block;"></canvas>
+
+    <div style="margin:16px 0;padding:16px;background:var(--bcc-accent);border-radius:var(--bcc-radius-sm);border-left:4px solid var(--bcc-primary);">
+      <p style="margin:0;font-size:0.9rem;color:var(--bcc-dark);"><strong>Strategy:</strong> <span id="res-strategy">--</span></p>
+      <p style="margin:8px 0 0;font-size:0.85rem;color:var(--bcc-text-light);">Recomposition works best for beginners and returning lifters. Advanced athletes may need dedicated bulk/cut phases.</p>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+      <button class="bcc-btn bcc-btn-secondary" onclick="saveRec()">💾 Save Plan</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="exportRec()">📄 Export Plan</button>
+      <button class="bcc-btn bcc-btn-outline" onclick="resetRec()" style="margin-left:auto;">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div class="bcc-tool-card-minimal" id="rec-history-panel">
+    <h3>📊 Saved Plans</h3>
+    <div id="rec-history-list" style="max-height:300px;overflow-y:auto;">
+      <p style="color:var(--bcc-text-light);font-style:italic;">No saved plans yet. Generate your first recomposition plan above.</p>
+    </div>
+  </div>
+
+  <div class="bcc-ad-slot" id="tool_middle" data-ad-slot="tool_middle"></div>
+
+<div class="bcc-article-tail" style="margin-top:48px;">
+    <div class="bcc-tail-related">
+      <h3>Related Articles</h3>
+      <div class="bcc-tail-card">
+        <a href="../blog/body-recomposition-meal-planning.html" class="bcc-tail-card-title">Body Recomposition Meal Planning</a>
+        <p class="bcc-tail-card-desc">Protein targets, calorie math, and the template I give to every recomposition client.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/scale-lied-jenna-recomposition.html" class="bcc-tail-card-title">When the Scale Lied: Jenna's Journey</a>
+        <p class="bcc-tail-card-desc">Four months, zero scale change, 4.2% body fat lost. The power of recomposition.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="../blog/marcus-weight-gain-muscle.html" class="bcc-tail-card-title">How Marcus Learned His Gain Was Muscle</a>
+        <p class="bcc-tail-card-desc">The scale went up 5 pounds. Nearly all of it was muscle. Here's how he knew.</p>
+      </div>
+    </div>
+    <div class="bcc-tail-tools">
+      <h3>Recommended Tools</h3>
+      <div class="bcc-tail-card">
+        <a href="body-fat-estimator.html" class="bcc-tail-card-title">📏 Body Fat Estimator</a>
+        <p class="bcc-tail-card-desc">Know your starting body fat before you plan.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="lean-mass-calculator.html" class="bcc-tail-card-title">💪 Lean Body Mass Calculator</a>
+        <p class="bcc-tail-card-desc">Track your lean mass gains throughout the plan.</p>
+      </div>
+      <div class="bcc-tail-card">
+        <a href="skinfold-tracker.html" class="bcc-tail-card-title">📝 Skinfold Tracker</a>
+        <p class="bcc-tail-card-desc">Monthly skinfolds to verify your recomposition progress.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bcc-ad-slot" id="tool_bottom" data-ad-slot="tool_bottom"></div>
+
+<footer class="bcc-footer">
+  <div class="bcc-container bcc-footer-grid">
+    <div><h4>Tools</h4><ul><li><a href="body-fat-estimator.html">Body Fat Estimator</a></li><li><a href="bmi-analyzer.html">BMI vs Body Fat</a></li><li><a href="lean-mass-calculator.html">Lean Body Mass</a></li><li><a href="skinfold-tracker.html">Skinfold Tracker</a></li><li><a href="bia-guide.html">BIA Guide</a></li><li><a href="recomposition-planner.html">Recomposition Planner</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="../blog/index.html">Blog</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../disclaimer.html">Disclaimer</a></li><li><a href="../disclosure.html">Disclosure</a></li></ul></div>
+    <div><h4>BodyCompCheck</h4><p style="font-size:0.85rem;opacity:0.7;line-height:1.6;">Free tools and evidence-based articles to help you understand your body composition numbers.</p></div>
+  </div>
+  <div class="bcc-container bcc-footer-bottom"><p>&copy; 2026 BodyCompCheck. All rights reserved.</p></div>
+</footer>
+
+<script src="../ads-loader.js"></script>
+<script>
+(function() {
+  'use strict';
+  var current = null;
+
+  function calcRecomp() {
+    var sex = document.getElementById('rec-sex').value;
+    var age = parseFloat(document.getElementById('rec-age').value) || 30;
+    var weight = parseFloat(document.getElementById('rec-weight').value) || 180;
+    var currentBF = parseFloat(document.getElementById('rec-current-bf').value) || 22;
+    var goalBF = parseFloat(document.getElementById('rec-goal-bf').value) || 15;
+    var training = parseInt(document.getElementById('rec-training').value) || 4;
+    var wKg = weight * 0.453592;
+    // Maintenance calories
+    var bmr = sex === 'male' ? (10 * wKg + 6.25 * (parseFloat(document.getElementById('rec-height')?.value || 70) * 2.54) - 5 * age + 5) : (10 * wKg + 6.25 * (parseFloat(document.getElementById('rec-height')?.value || 70) * 2.54) - 5 * age - 161);
+    var activityMult = [1.2, 1.375, 1.55, 1.725, 1.9][Math.min(training - 1, 4)];
+    var maintenance = Math.round(bmr * activityMult);
+    // Determine strategy
+    var bfDiff = currentBF - goalBF;
+    var strategy, calories, rate, weeks;
+    if (bfDiff > 8) {
+      strategy = 'Cut Phase First';
+      calories = maintenance - 300;
+      rate = '-0.5 to -1.0% body fat / month';
+      weeks = Math.ceil(bfDiff / 0.75) * 4;
+    } else if (bfDiff > 0) {
+      strategy = 'Recomposition (Simultaneous)';
+      calories = maintenance;
+      rate = '-0.3 to -0.7% body fat / month';
+      weeks = Math.ceil(bfDiff / 0.5) * 4;
+    } else {
+      strategy = 'Lean Bulk';
+      calories = maintenance + 200;
+      rate = '+0.25 to +0.5% body weight / month';
+      weeks = 16;
+    }
+    var protein = Math.round(wKg * 1.8);
+    // Milestones
+    var milestones = [];
+    for (var m = 1; m <= Math.min(6, Math.ceil(weeks / 4)); m++) {
+      var prog = m * 4 / weeks;
+      var estBF = currentBF - (bfDiff * prog);
+      milestones.push({month: m, bf: estBF, weight: weight - (weight * (currentBF - estBF) / 100)});
+    }
+    document.getElementById('res-weeks').textContent = weeks;
+    document.getElementById('res-calories').textContent = calories;
+    document.getElementById('res-protein').textContent = protein;
+    document.getElementById('res-rate').textContent = rate;
+    document.getElementById('res-strategy').textContent = strategy;
+    var mileHTML = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Month</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Est. BF%</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Est. Weight</th></tr></thead><tbody>';
+    milestones.forEach(function(m) {
+      mileHTML += '<tr><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">Month ' + m.month + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + m.bf.toFixed(1) + '%</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + m.weight.toFixed(1) + ' lbs</td></tr>';
+    });
+    mileHTML += '</tbody></table>';
+    document.getElementById('rec-milestones').innerHTML = mileHTML;
+    document.getElementById('rec-results').style.display = 'block';
+    current = { weeks: weeks, calories: calories, protein: protein, rate: rate, strategy: strategy, currentBF: currentBF, goalBF: goalBF, weight: weight, milestones: milestones, date: new Date().toISOString() };
+    drawRecChart(milestones, currentBF, goalBF);
+    document.getElementById('rec-results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function drawRecChart(milestones, startBF, goalBF) {
+    var canvas = document.getElementById('rec-chart');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    var pad = 40;
+    var chartW = w - pad * 2;
+    var chartH = h - pad * 2;
+    var bfs = [startBF].concat(milestones.map(function(m) { return m.bf; }));
+    var min = goalBF - 2;
+    var max = startBF + 2;
+    // Axes
+    ctx.strokeStyle = '#ccc'; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+    // Line
+    ctx.strokeStyle = '#2D6A4F'; ctx.lineWidth = 2; ctx.beginPath();
+    bfs.forEach(function(bf, i) {
+      var x = pad + (i / (bfs.length - 1)) * chartW;
+      var y = h - pad - ((bf - min) / (max - min)) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Points
+    ctx.fillStyle = '#2D6A4F';
+    bfs.forEach(function(bf, i) {
+      var x = pad + (i / (bfs.length - 1)) * chartW;
+      var y = h - pad - ((bf - min) / (max - min)) * chartH;
+      ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+    });
+    // Goal line
+    ctx.strokeStyle = '#e74c3c'; ctx.setLineDash([5, 5]); ctx.beginPath();
+    var goalY = h - pad - ((goalBF - min) / (max - min)) * chartH;
+    ctx.moveTo(pad, goalY); ctx.lineTo(w - pad, goalY); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#e74c3c'; ctx.font = '11px sans-serif'; ctx.fillText('Goal: ' + goalBF + '%', w - pad - 60, goalY - 5);
+    // Labels
+    ctx.fillStyle = '#666'; ctx.font = '11px sans-serif';
+    ctx.fillText(min.toFixed(0) + '%', 5, h - pad); ctx.fillText(max.toFixed(0) + '%', 5, pad + 10);
+    for (var i = 0; i < bfs.length; i++) {
+      var x = pad + (i / (bfs.length - 1)) * chartW;
+      ctx.fillText(i === 0 ? 'Start' : 'M' + i, x - 10, h - pad + 15);
+    }
+  }
+
+  function saveRec() {
+    if (!current) return;
+    var history = JSON.parse(localStorage.getItem('bcc-rec-history') || '[]');
+    history.push(current);
+    localStorage.setItem('bcc-rec-history', JSON.stringify(history));
+    renderRecHistory();
+  }
+
+  function renderRecHistory() {
+    var history = JSON.parse(localStorage.getItem('bcc-rec-history') || '[]');
+    var list = document.getElementById('rec-history-list');
+    if (history.length === 0) {
+      list.innerHTML = '<p style="color:var(--bcc-text-light);font-style:italic;">No saved plans yet.</p>';
+      return;
+    }
+    var html = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Date</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Current</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Goal</th><th style="text-align:right;padding:8px;border-bottom:1px solid var(--bcc-border);">Weeks</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--bcc-border);">Strategy</th></tr></thead><tbody>';
+    history.slice().reverse().forEach(function(h) {
+      var d = new Date(h.date).toLocaleDateString();
+      html += '<tr><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + d + '</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.currentBF.toFixed(1) + '%</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.goalBF.toFixed(1) + '%</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--bcc-border);">' + h.weeks + '</td><td style="padding:8px;border-bottom:1px solid var(--bcc-border);">' + h.strategy + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    list.innerHTML = html;
+  }
+
+  function exportRec() {
+    if (!current) return;
+    var text = 'BodyCompCheck — Body Recomposition Plan\n';
+    text += 'Generated: ' + new Date().toLocaleString() + '\n\n';
+    text += 'Current Body Fat: ' + current.currentBF.toFixed(1) + '%\n';
+    text += 'Goal Body Fat: ' + current.goalBF.toFixed(1) + '%\n';
+    text += 'Strategy: ' + current.strategy + '\n';
+    text += 'Timeline: ' + current.weeks + ' weeks\n';
+    text += 'Daily Calories: ' + current.calories + '\n';
+    text += 'Daily Protein: ' + current.protein + 'g\n';
+    text += 'Target Rate: ' + current.rate + '\n\n';
+    text += 'Monthly Milestones:\n';
+    current.milestones.forEach(function(m) {
+      text += '  Month ' + m.month + ': ' + m.bf.toFixed(1) + '% BF, ' + m.weight.toFixed(1) + ' lbs\n';
+    });
+    text += '\nDisclaimer: This is an estimate based on population averages.\n';
+    text += 'Individual results vary based on genetics, adherence, and training quality.\n';
+    var blob = new Blob([text], {type: 'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'bodycompcheck-recomposition-plan.txt'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  function resetRec() {
+    document.getElementById('rec-results').style.display = 'none';
+    current = null;
+    document.getElementById('rec-age').value = '30';
+    document.getElementById('rec-weight').value = '180';
+    document.getElementById('rec-current-bf').value = '22';
+    document.getElementById('rec-goal-bf').value = '15';
+  }
+
+  renderRecHistory();
+  window.calcRecomp = calcRecomp;
+  window.saveRec = saveRec;
+  window.exportRec = exportRec;
+  window.resetRec = resetRec;
+})();
+</script>
+</body>
+</html>
